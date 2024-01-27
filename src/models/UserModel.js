@@ -5,7 +5,6 @@ const DataSchema=mongoose.Schema({
     lastName:{type:String},
     mobile:{type:String},
     password:{type:String},
-    photo:{type:String},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
 const UsersModel=mongoose.model('auths',DataSchema);
