@@ -5,6 +5,11 @@ const DataSchema=mongoose.Schema({
     lastName:{type:String},
     mobile:{type:String},
     password:{type:String},
+    department:{type:String},
+    batch:{type:String},
+    section:{type:String},
+    studentId:{type:String},
+    varsity:{type:String},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
 const UsersModel=mongoose.model('auths',DataSchema);
