@@ -27,7 +27,7 @@ exports.Login=async (req,res)=>{
         if(result==1){
             let Payload = {
                 exp:Math.floor(Date.now()/1000)+(24*60*60),
-                data: reqBody['email']
+                data: reqBody['email'] /// id rako else email
             }
 
             let token = jwt.sign(Payload, 'SecretKey123456789');

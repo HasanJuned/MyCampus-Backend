@@ -8,7 +8,7 @@ const DataSchema=mongoose.Schema({
     department:{type:String},
     batch:{type:String},
     section:{type:String},
-    studentId:{type:String},
+    studentId:{type:String, unique:true},
     varsity:{type:String},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
