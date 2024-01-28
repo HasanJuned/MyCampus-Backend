@@ -1,7 +1,8 @@
 // Application Configuration
 const express = require("express");
 const app = express();
-const router = require("./src/routes/api");
+const studentsRouter = require("./src/routes/StudentsApi");
+const teachersRouter = require("./src/routes/TeachersApi");
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const hpp = require("hpp");
@@ -23,7 +24,8 @@ app.use(cors());
 app.use(hpp());
 app.use(helmet());
 app.use(limiter);
-app.use('/api/v1', router);
+app.use('/api/student', studentsRouter);
+app.use('/api/teacher', teachersRouter);
 
 // let URI = "mongodb+srv://<username>:<password>@cluster0.7uslu.mongodb.net/practise?retryWrites=true&w=majority";
 // let OPTION = {user: 'admin', pass:'admin', autoIndex: true}

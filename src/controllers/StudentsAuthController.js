@@ -1,4 +1,4 @@
-const UserModel = require("../models/UserModel")
+const StudentsAuthModel = require("../models/StudentsAuthModel")
 const jwt = require("jsonwebtoken")
 const OtpModel = require("../models/OtpModel")
 const TaskModel = require("../models/TaskModel")
@@ -8,7 +8,7 @@ exports.Registration=async (req,res)=>{
 
     let reqBody = req.body;
     try{
-        let result = await UserModel.create(reqBody);
+        let result = await StudentsAuthModel.create(reqBody);
         res.status(200).json({status: "success", data: result})
 
     }catch(e){
@@ -23,11 +23,11 @@ exports.Login=async (req,res)=>{
 
 
     try{
-        let result = await UserModel.find(reqBody).count();
+        let result = await StudentsAuthModel.find(reqBody).count();
         if(result==1){
             let Payload = {
                 exp:Math.floor(Date.now()/1000)+(24*60*60),
-                data: reqBody['email'] /// id rako else email
+                data: reqBody['studentId']
             }
 
             let token = jwt.sign(Payload, 'SecretKey123456789');
@@ -47,8 +47,8 @@ exports.Login=async (req,res)=>{
 
 exports.ProfileDetails = async (req, res) => {
     try {
-      let email = req.headers['email'];
-      let result = await UserModel.find({ email: email });
+      let email = req.headers['studentId'];
+      let result = await StudentsAuthModel.find({ studentId: email });
       res.status(200).json({ status: 'success', data: result });
     } catch (e) {
       console.error(e);
@@ -58,9 +58,10 @@ exports.ProfileDetails = async (req, res) => {
 
   exports.ProfileUpdate = async (req, res) => {
     try {
-      let email = req.headers['email'];
+      //let email = req.headers['email'];
+      let studentIdd = req.headers['studentId'];
       let reqBody = req.body;
-      let result = await UserModel.updateOne({ email: email }, reqBody);
+      let result = await StudentsAuthModel.updateOne({ studentId: studentIdd }, reqBody);
       res.status(200).json({ status: 'success', data: result });
     } catch (e) {
       console.error(e);
@@ -75,7 +76,7 @@ exports.ProfileDetails = async (req, res) => {
     let EmailText = "Your Verification Code is: "+OtpCode;
     let EmailSubject = "Task Manager Verification Code"
 
-    let result = await UserModel.find({email:email}).count();
+    let result = await StudentsAuthModel.find({email:email}).count();
 
     if(result===1){
         await SendEmailUtility(email, EmailText, EmailSubject);
@@ -119,7 +120,7 @@ exports.ProfileDetails = async (req, res) => {
 
     if(result===1){
 
-        let result = await UserModel.updateOne({email:email}, {password: newPass});
+        let result = await StudentsAuthModel.updateOne({email:email}, {password: newPass});
         res.status(200).json({status: "success", data: "Password Reset Success"})
 
 
