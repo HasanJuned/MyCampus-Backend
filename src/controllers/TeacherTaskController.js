@@ -1,5 +1,6 @@
 const TeacherTaskModel = require("../models/TeacherTaskModel")
 const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel")
+const ChatGroupModel = require("../models/ChatGroupModel")
 
 
 /// createBatchSectionCourse
@@ -27,6 +28,23 @@ exports.createGroup = async (req, res) => {
         let reqBody = req.body;
         reqBody.email = req.headers['email'];
         let result = await CourseTeacherGroupModel.create(reqBody)
+        res.status(200).json({status: 'success', data: result});
+
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+    }
+
+
+}
+
+exports.chatGroup = async (req, res) => {
+
+    try {
+
+        let reqBody = req.body;
+        reqBody.email = req.headers['email'];
+        let result = await ChatGroupModel.create(reqBody)
         res.status(200).json({status: 'success', data: result});
 
 
