@@ -47,7 +47,7 @@ exports.Login=async (req,res)=>{
 exports.ProfileDetails = async (req, res) => {
     try {
         let email = req.headers['email'];
-        let result = await TeachersAuthModel.find({ email: email });
+        let result = await TeachersAuthModel.find({email: email });
         res.status(200).json({ status: 'success', data: result });
     } catch (e) {
         console.error(e);

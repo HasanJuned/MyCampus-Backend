@@ -1,7 +1,7 @@
 const StudentsAuthModel = require("../models/StudentsAuthModel")
 const jwt = require("jsonwebtoken")
 const OtpModel = require("../models/OtpModel")
-const TaskModel = require("../models/TaskModel")
+const TaskModel = require("../models/TeacherTaskModel")
 const SendEmailUtility = require("../utility/SendEmailUtility");
 
 exports.Registration=async (req,res)=>{

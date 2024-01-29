@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const StudentsAuthController = require('../controllers/StudentsAuthController')
 const StudentAuthVerifyMiddleWare=require("../middleWare/StudentAuthVerifyMiddleWare");
-const TasksController = require('../controllers/TaskController')
+const StudentTasksController = require('../controllers/StudentTaskController')
 
 router.post('/Registration', StudentsAuthController.Registration)
 router.post('/Login', StudentsAuthController.Login)
@@ -13,11 +13,11 @@ router.get("/RecoverVerifyOTP/:email/:otp",StudentsAuthController.RecoverVerifyO
 router.post("/RecoverResetPassword",StudentsAuthController.RecoverResetPassword);
 
 
-router.post("/createTask",StudentAuthVerifyMiddleWare,TasksController.createTask);
-router.get("/deleteTask/:id",StudentAuthVerifyMiddleWare,TasksController.deleteTask);
-router.get("/updateTaskStatus/:id/:status",StudentAuthVerifyMiddleWare,TasksController.updateTaskStatus);
-router.get("/listTaskByStatus/:status",StudentAuthVerifyMiddleWare,TasksController.listTaskByStatus);
-router.get("/taskStatusCount",StudentAuthVerifyMiddleWare,TasksController.taskStatusCount);
+router.post("/createTask",StudentAuthVerifyMiddleWare,StudentTasksController.createTask);
+router.get("/deleteTask/:id",StudentAuthVerifyMiddleWare,StudentTasksController.deleteTask);
+router.get("/updateTaskStatus/:id/:status",StudentAuthVerifyMiddleWare,StudentTasksController.updateTaskStatus);
+router.get("/listTaskByStatus/:status",StudentAuthVerifyMiddleWare,StudentTasksController.listTaskByStatus);
+router.get("/taskStatusCount",StudentAuthVerifyMiddleWare,StudentTasksController.taskStatusCount);
 
 
 module.exports = router;

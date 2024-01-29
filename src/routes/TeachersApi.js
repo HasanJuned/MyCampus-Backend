@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const TeachersAuthController = require('../controllers/TeachersAuthController')
 const TeacherAuthVerifyMiddleware=require("../middleWare/TeacherAuthVerifyMiddleWare");
-//const TasksController = require('../controllers/TaskController')
+const TeacherTasksController = require('../controllers/TeacherTaskController')
 
 router.post('/Registration', TeachersAuthController.Registration)
 router.post('/Login', TeachersAuthController.Login)
@@ -13,11 +13,11 @@ router.get("/RecoverVerifyOTP/:email/:otp",TeachersAuthController.RecoverVerifyO
 router.post("/RecoverResetPassword",TeachersAuthController.RecoverResetPassword);
 
 
-// router.post("/createTask",AuthVerifyMiddleware,TasksController.createTask);
-// router.get("/deleteTask/:id",AuthVerifyMiddleware,TasksController.deleteTask);
-// router.get("/updateTaskStatus/:id/:status",AuthVerifyMiddleware,TasksController.updateTaskStatus);
-// router.get("/listTaskByStatus/:status",AuthVerifyMiddleware,TasksController.listTaskByStatus);
-// router.get("/taskStatusCount",AuthVerifyMiddleware,TasksController.taskStatusCount);
+router.post("/createTask",TeacherAuthVerifyMiddleware,TeacherTasksController.createTask);
+router.get("/deleteTask/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTask);
+router.get("/updateTaskStatus/:id/:courseCode",TeacherAuthVerifyMiddleware,TeacherTasksController.updateTaskStatus);
+router.get("/listTaskByStatus/:batch",TeacherAuthVerifyMiddleware,TeacherTasksController.listTaskByStatus);
+router.get("/taskStatusCount",TeacherAuthVerifyMiddleware,TeacherTasksController.taskStatusCount);
 
 
 module.exports = router;

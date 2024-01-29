@@ -6,6 +6,6 @@ const DataSchema=mongoose.Schema({
     email:{type:String},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
-const TasksModel=mongoose.model('tasks',DataSchema);
-module.exports=TasksModel
+const StudentTasksModel=mongoose.model('studentTasks',DataSchema);
+module.exports=StudentTasksModel
 
