@@ -14,6 +14,7 @@ router.post("/RecoverResetPassword",TeachersAuthController.RecoverResetPassword)
 
 
 router.post("/createTask",TeacherAuthVerifyMiddleware,TeacherTasksController.createTask);
+router.post("/createGroup",TeacherAuthVerifyMiddleware,TeacherTasksController.createGroup);
 router.get("/deleteTask/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTask);
 router.get("/updateTaskStatus/:id/:courseCode",TeacherAuthVerifyMiddleware,TeacherTasksController.updateTaskStatus);
 router.get("/listTaskByStatus/:batch",TeacherAuthVerifyMiddleware,TeacherTasksController.listTaskByStatus);
@@ -21,7 +22,7 @@ router.get("/taskStatusCount",TeacherAuthVerifyMiddleware,TeacherTasksController
 
 
 // available
-router.get("/available",TeacherTasksController.available);
+router.get("/availableCourseAndTeacher",TeacherTasksController.AvailableCourseAndTeacher);
 
 
 module.exports = router;

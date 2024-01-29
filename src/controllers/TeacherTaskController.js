@@ -1,5 +1,7 @@
 const TeacherTaskModel = require("../models/TeacherTaskModel")
-const AvailableCourseTeacherGroupModel = require("../models/AvailableCourseTeacherGroupModel")
+const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel")
+
+
 
 /// createBatchSectionCourse
 exports.createTask = async (req, res) => {
@@ -9,6 +11,25 @@ exports.createTask = async (req, res) => {
         reqBody.email = req.headers['email'];
         let result = await TeacherTaskModel.create(reqBody)
         res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+    }
+
+
+}
+
+exports.createGroup = async (req, res) => {
+
+    try {
+        let reqBody = req.body;
+        let email = req.headers['email']
+        let result = await TeacherTaskModel.find()
+
+        const createdGroup = await CourseTeacherGroupModel.create(result);
+        res.status(200).json({ status: 'success', data: createdGroup });
+
+
 
     } catch (e) {
         res.status(200).json({status: 'fail', data: 'Internal Server Error'});
@@ -94,7 +115,7 @@ exports.taskStatusCount = async (req, res) => {
 }
 
 
-exports.available = async (req, res) => {
+exports.AvailableCourseAndTeacher = async (req, res) => {
 
     try {
 

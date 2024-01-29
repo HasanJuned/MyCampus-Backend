@@ -7,6 +7,6 @@ const DataSchema=mongoose.Schema({
     email:{type:String},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
-const AvailableCourseTeacherGroupModel=mongoose.model('availableCourseTeacher',DataSchema);
-module.exports=AvailableCourseTeacherGroupModel
+const CourseTeacherGroupModel=mongoose.model('CourseTeacherGroupModel',DataSchema);
+module.exports=CourseTeacherGroupModel
 
