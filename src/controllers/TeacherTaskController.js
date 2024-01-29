@@ -13,7 +13,6 @@ exports.createTask = async (req, res) => {
         res.status(200).json({status: 'success', data: result1});
 
 
-
     } catch (e) {
         res.status(200).json({status: 'fail', data: 'Internal Server Error'});
     }
@@ -26,9 +25,22 @@ exports.createGroup = async (req, res) => {
     try {
 
         let reqBody = req.body;
-        reqBody.email = req.headers['email'];
-        let result = await CourseTeacherGroupModel.create(reqBody)
-        res.status(200).json({status: 'success', data: result});
+
+
+        let name = reqBody.member.name
+        let bool = false;
+        console.log(name)
+        let result2 = await CourseTeacherGroupModel.find({"member.name": name}).count();
+        console.log('se',result2)
+        if(result2 === 0){
+            reqBody.email = req.headers['email'];
+            let result = await CourseTeacherGroupModel.create(reqBody)
+            res.status(200).json({status: 'success', data: result});
+        } else {
+            console.log("Already added")
+            res.status(200).json({status: 'fail', data: 'Already added'});
+
+        }
 
 
     } catch (e) {
@@ -115,10 +127,7 @@ exports.taskStatusCount = async (req, res) => {
         let result = await TeacherTaskModel.aggregate([{$match: {email: email}}, {
             $group: {
                 _id: {
-                    batch: "$batch",
-                    section: "$section",
-                    courseCode: "$courseCode",
-                    courseTitle: "$courseTitle"
+                    batch: "$batch", section: "$section", courseCode: "$courseCode", courseTitle: "$courseTitle"
                 }, sum: {$count: {}}
             }
         }]);
