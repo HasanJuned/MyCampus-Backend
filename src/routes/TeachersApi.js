@@ -20,4 +20,8 @@ router.get("/listTaskByStatus/:batch",TeacherAuthVerifyMiddleware,TeacherTasksCo
 router.get("/taskStatusCount",TeacherAuthVerifyMiddleware,TeacherTasksController.taskStatusCount);
 
 
+// available
+router.get("/available",TeacherTasksController.available);
+
+
 module.exports = router;

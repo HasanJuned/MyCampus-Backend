@@ -1,4 +1,4 @@
-const TasksModel = require("../models/TeacherTaskModel")
+const TeacherTaskModel = require("../models/TeacherTaskModel")
 const AvailableCourseTeacherGroupModel = require("../models/AvailableCourseTeacherGroupModel")
 
 /// createBatchSectionCourse
@@ -7,8 +7,7 @@ exports.createTask = async (req, res) => {
     try {
         let reqBody = req.body;
         reqBody.email = req.headers['email'];
-
-        let result = await TasksModel.create(reqBody)
+        let result = await TeacherTaskModel.create(reqBody)
         res.status(200).json({status: 'success', data: result});
 
     } catch (e) {
@@ -23,7 +22,7 @@ exports.deleteTask = async (req, res) => {
         let id = req.params.id;
         let deleteTask = {_id: id}
 
-        let result = await TasksModel.deleteOne(deleteTask)
+        let result = await TeacherTaskModel.deleteOne(deleteTask)
         res.status(200).json({status: 'success', data: result});
 
     } catch (e) {
@@ -41,7 +40,7 @@ exports.updateTaskStatus = async (req, res) => {
         let updateTask = {_id: id};
         let reqBody = {courseCode: courseCode};
 
-        let result = await TasksModel.updateOne(updateTask, reqBody)
+        let result = await TeacherTaskModel.updateOne(updateTask, reqBody)
         res.status(200).json({status: 'success', data: result});
 
 
@@ -59,7 +58,7 @@ exports.listTaskByStatus = async (req, res) => {
         let batch = req.params.batch;
         let email = req.headers['email']
 
-        let result = await TasksModel.find({email: email, batch: batch})
+        let result = await TeacherTaskModel.find({email: email, batch: batch})
         res.status(200).json({status: 'success', data: result});
 
 
@@ -75,7 +74,7 @@ exports.taskStatusCount = async (req, res) => {
     try {
 
         let email = req.headers['email'];
-        let result = await TasksModel.aggregate([{$match: {email: email}}, {
+        let result = await TeacherTaskModel.aggregate([{$match: {email: email}}, {
             $group: {
                 _id: {
                     batch: "$batch",
@@ -85,8 +84,23 @@ exports.taskStatusCount = async (req, res) => {
                 }, sum: {$count: {}}
             }
         }]);
-
         res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+    }
+
+
+}
+
+
+exports.available = async (req, res) => {
+
+    try {
+
+        let result = await TeacherTaskModel.find()
+        res.status(200).json({ status: 'success', data: result });
+
 
     } catch (e) {
         res.status(200).json({status: 'fail', data: 'Internal Server Error'});
