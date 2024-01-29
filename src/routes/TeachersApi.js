@@ -14,7 +14,7 @@ router.post("/RecoverResetPassword",TeachersAuthController.RecoverResetPassword)
 
 
 router.post("/createTask",TeacherAuthVerifyMiddleware,TeacherTasksController.createTask);
-router.get("/createGroup",TeacherAuthVerifyMiddleware,TeacherTasksController.createGroup);
+router.post("/createGroup",TeacherAuthVerifyMiddleware,TeacherTasksController.createGroup);
 router.get("/deleteTask/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTask);
 router.get("/updateTaskStatus/:id/:courseCode",TeacherAuthVerifyMiddleware,TeacherTasksController.updateTaskStatus);
 router.get("/listTaskByStatus/:batch",TeacherAuthVerifyMiddleware,TeacherTasksController.listTaskByStatus);

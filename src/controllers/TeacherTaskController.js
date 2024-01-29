@@ -9,22 +9,7 @@ exports.createTask = async (req, res) => {
         let reqBody = req.body;
         reqBody.email = req.headers['email'];
         let result1 = await TeacherTaskModel.create(reqBody)
-        let result = await TeacherTaskModel.find()
-        console.log(result)
-
-        let list = [
-            {
-                "batch": req.body.batch,
-                "section": req.body.section,
-                "courseCode": req.body.courseCode,
-                "courseTitle": req.body.courseTitle,
-                "email": req.body.email,
-            }
-        ];
-
-        let result2 = await CourseTeacherGroupModel.create(list)
-
-        res.status(200).json({status: 'success', data: result1, token:result2});
+        res.status(200).json({status: 'success', data: result1});
 
 
 
@@ -39,7 +24,9 @@ exports.createGroup = async (req, res) => {
 
     try {
 
-        let result = await CourseTeacherGroupModel.find()
+        let reqBody = req.body;
+        reqBody.email = req.headers['email'];
+        let result = await CourseTeacherGroupModel.create(reqBody)
         res.status(200).json({status: 'success', data: result});
 
 
