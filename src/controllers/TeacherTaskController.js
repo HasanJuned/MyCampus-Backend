@@ -30,7 +30,7 @@ exports.createGroup = async (req, res) => {
         let name = reqBody.member.name
         let bool = false;
         console.log(name)
-        let result2 = await CourseTeacherGroupModel.find({"member.name": name}).count();
+        let result2 = await CourseTeacherGroupModel.find({"member.name": name}).count(); // ekane kam roise
         console.log('se',result2)
         if(result2 === 0){
             reqBody.email = req.headers['email'];
