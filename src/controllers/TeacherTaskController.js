@@ -26,12 +26,11 @@ exports.createGroup = async (req, res) => {
 
         let reqBody = req.body;
 
-
         let name = reqBody.member.name
         let bool = false;
         console.log(name)
         let result2 = await CourseTeacherGroupModel.find({"member.name": name}).count(); // ekane kam roise korar baki
-        console.log('se',result2)
+        //console.log('se',result2)
         if(result2 === 0){
             reqBody.email = req.headers['email'];
             let result = await CourseTeacherGroupModel.create(reqBody)
@@ -44,7 +43,7 @@ exports.createGroup = async (req, res) => {
 
 
     } catch (e) {
-        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+        res.status(200).json({status: 'fail', data: e.toString()});
     }
 
 
