@@ -21,20 +21,60 @@ exports.createTask = async (req, res) => {
 }
 
 exports.createGroup = async (req, res) => {
+    try {
+
+        let id = req.params.id;
+        let findId = {_id: id} // id found
+        const reqBody = req.body;
+        const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member]; // Assuming this is an array of member objects to add
+
+        const mainDocument = await CourseTeacherGroupModel.findById(findId);
+
+        if (!mainDocument) {
+            console.log("Main document not found");
+            return res.status(200).json({ status: 'fail', data: 'Main document not found' });
+        }
+
+        const existingMembers = mainDocument.member.filter(existingMember =>
+            members.some(newMember => existingMember.name === newMember.name)
+        );
+
+        if (existingMembers.length === 0) {
+            // Add new members to the array using $push
+            mainDocument.member.push(...members);
+
+            // Save the updated document
+            const updatedDocument = await mainDocument.save();
+            return res.status(200).json({ status: 'success', data: updatedDocument });
+        } else {
+            console.log("One or more members already added");
+            return res.status(200).json({ status: 'fail', data: 'One or more members already added' });
+        }
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(200).json({ status: 'fail', data: e.toString() });
+    }
+};
+
+
+exports.createGroup2 = async (req, res) => {
 
     try {
 
         let reqBody = req.body;
+        let id = req.params.id
+        let email = req.headers['email']
 
-        let name = reqBody.member.name
-        let bool = false;
-        console.log(name)
-        let result2 = await CourseTeacherGroupModel.find({"member.name": name}).count(); // ekane kam roise korar baki
-        //console.log('se',result2)
+        // let courseTitle = reqBody.courseTitle
+        // let name = reqBody.member.name
+        // let bool = false;
+        // console.log(name)
+        let result2 = await CourseTeacherGroupModel.find({"_id": id});
         if(result2 === 0){
-            reqBody.email = req.headers['email'];
-            let result = await CourseTeacherGroupModel.create(reqBody)
-            res.status(200).json({status: 'success', data: result});
+             console.log('found', result2)
+            // reqBody.email = req.headers['email'];
+            //let result = await CourseTeacherGroupModel.create(reqBody)
+            res.status(200).json({status: 'success', data: result2});
         } else {
             console.log("Already added")
             res.status(200).json({status: 'fail', data: 'Already added'});
@@ -107,7 +147,7 @@ exports.listTaskByStatus = async (req, res) => {
         let batch = req.params.batch;
         let email = req.headers['email']
 
-        let result = await TeacherTaskModel.find({email: email, batch: batch})
+        let result = await CourseTeacherGroupModel.find({email: email, batch: batch})
         res.status(200).json({status: 'success', data: result});
 
 
