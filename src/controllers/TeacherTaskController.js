@@ -32,8 +32,15 @@ exports.createGroup = async (req, res) => {
         const mainDocument = await CourseTeacherGroupModel.findById(findId);
 
         if (!mainDocument) {
-            console.log("Main document not found");
-            return res.status(200).json({ status: 'fail', data: 'Main document not found' });
+            try {
+                let result = await CourseTeacherGroupModel.create(reqBody)
+                return res.status(200).json({ status: 'success', data: result });
+            }catch (e){
+                console.log("Main document not found");
+                return res.status(200).json({ status: 'fail', data: 'Main document not found' });
+            }
+
+
         }
 
         const existingMembers = mainDocument.member.filter(existingMember =>
