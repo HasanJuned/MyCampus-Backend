@@ -192,7 +192,7 @@ exports.AvailableCourseAndTeacher = async (req, res) => {
 
     try {
 
-        let result = await TeacherTaskModel.find()
+        let result = await CourseTeacherGroupModel.find()
         res.status(200).json({status: 'success', data: result});
 
 
