@@ -65,38 +65,6 @@ exports.createGroup = async (req, res) => {
 };
 
 
-exports.createGroup2 = async (req, res) => {
-
-    try {
-
-        let reqBody = req.body;
-        let id = req.params.id
-        let email = req.headers['email']
-
-        // let courseTitle = reqBody.courseTitle
-        // let name = reqBody.member.name
-        // let bool = false;
-        // console.log(name)
-        let result2 = await CourseTeacherGroupModel.find({"_id": id});
-        if(result2 === 0){
-             console.log('found', result2)
-            // reqBody.email = req.headers['email'];
-            //let result = await CourseTeacherGroupModel.create(reqBody)
-            res.status(200).json({status: 'success', data: result2});
-        } else {
-            console.log("Already added")
-            res.status(200).json({status: 'fail', data: 'Already added'});
-
-        }
-
-
-    } catch (e) {
-        res.status(200).json({status: 'fail', data: e.toString()});
-    }
-
-
-}
-
 exports.chatGroup = async (req, res) => {
 
     try {
