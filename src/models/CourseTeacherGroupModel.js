@@ -1,17 +1,18 @@
 const  mongoose=require('mongoose');
 
-// const ChatSchema = mongoose.Schema({
-//     message: { type: String },
-//     sender: { type: String },
-//     timestamp: { type: Date, default: Date.now }
-// }, { versionKey: false });
-//
+const ChatSchema = mongoose.Schema({
+    message: { type: String },
+    sender: { type: String },
+    timestamp: { type: Date, default: Date.now }
+}, { versionKey: false });
+
 
 const MemberInfoSchema = mongoose.Schema({
     name: { type: String },
     batch: { type: String },
     department: { type: String },
     section: { type: String },
+    chat:[ChatSchema],
     timestamp: { type: Date, default: Date.now }
 }, { versionKey: false });
 
@@ -23,7 +24,6 @@ const DataSchema=mongoose.Schema({
     courseTitle:{type:String},
     email:{type:String},
     member:[MemberInfoSchema],
-    //chat:[ChatSchema],
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
 
