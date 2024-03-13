@@ -19,8 +19,6 @@ exports.Registration=async (req,res)=>{
 exports.Login=async (req,res)=>{
 
     let reqBody = req.body;
-
-
     try{
         let result = await TeachersAuthModel.find(reqBody).count();
         if(result===1){
