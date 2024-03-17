@@ -82,7 +82,7 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
                 const id3 = courseTeacherGroupDocuments._id;
                 console.log("Found document ID:", id3);
 
-                // Add a new field to the document
+                // Add a new field to the previous document
                 courseTeacherGroupDocuments.set({wowo:'f'});
 
                 // Save the updated document
