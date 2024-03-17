@@ -10,6 +10,7 @@ const ChatSchema = mongoose.Schema({
 const MemberInfoSchema = mongoose.Schema({
     name: { type: String },
     batch: { type: String },
+    designation: { type: String },
     department: { type: String },
     section: { type: String },
     //chat:[ChatSchema],
@@ -24,6 +25,7 @@ const DataSchema=mongoose.Schema({
     courseTitle:{type:String},
     email:{type:String},
     member:[MemberInfoSchema],
+    wowo:{type: String},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
 

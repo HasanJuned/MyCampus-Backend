@@ -29,7 +29,7 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
         const reqBody = req.body;
         const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member]; // Assuming this is an array of member objects to add
 
-        const mainDocument = await CourseTeacherGroupModel.findById(findId);
+        const mainDocument = await CourseTeacherGroupModel.findById(null);
 
         if (!mainDocument) {
             try {
@@ -67,10 +67,31 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
 exports.joinSubjectGroupBatchSections = async (req, res) => {
     try {
 
+        // 65f6cbde91159aeba9d32433
+
         let id = req.params.id;
         let findId = {_id: id} // id found
         const reqBody = req.body;
-        const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member]; // Assuming this is an array of member objects to add
+        const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
+
+        let courseTeacherGroupDocument = await CourseTeacherGroupModel.find(); // document searching of other collections
+
+        if (courseTeacherGroupDocument) {
+            for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
+                const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
+                const id3 = courseTeacherGroupDocuments._id;
+                console.log("Found document ID:", id3);
+
+                // Add a new field to the document
+                courseTeacherGroupDocuments.set({wowo:'f'});
+
+                // Save the updated document
+               await courseTeacherGroupDocuments.save();
+            }
+
+        } else {
+            console.log("No documents found in CourseTeacherGroupModel collection.");
+        }
 
         const mainDocument = await ChatGroupModel.findById(findId);
 
