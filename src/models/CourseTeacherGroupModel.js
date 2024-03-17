@@ -12,7 +12,7 @@ const MemberInfoSchema = mongoose.Schema({
     batch: { type: String },
     department: { type: String },
     section: { type: String },
-    chat:[ChatSchema],
+    //chat:[ChatSchema],
     timestamp: { type: Date, default: Date.now }
 }, { versionKey: false });
 

@@ -57,7 +57,7 @@ exports.ProfileUpdate = async (req, res) => {
     try {
         let email = req.headers['email'];
         let reqBody = req.body;
-        let result = await TeachersAuthModel.updateOne({ email: email }, reqBody);
+        let result = await TeachersAuthModel.updateOne({email: email }, reqBody);
         res.status(200).json({ status: 'success', data: result });
     } catch (e) {
         console.error(e);
@@ -70,7 +70,7 @@ exports.RecoverVerifyEmail= async(req,res)=>{
     let email = req.params.email;
     let OtpCode = Math.floor(100000 + Math.random() * 900000)
     let EmailText = "Your Verification Code is: "+OtpCode;
-    let EmailSubject = "Task Manager Verification Code"
+    let EmailSubject = "My Campus App Verification Code is- "
 
     let result = await TeachersAuthModel.find({email:email}).count();
 

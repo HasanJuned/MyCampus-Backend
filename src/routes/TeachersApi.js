@@ -13,8 +13,9 @@ router.get("/RecoverVerifyOTP/:email/:otp",TeachersAuthController.RecoverVerifyO
 router.post("/RecoverResetPassword",TeachersAuthController.RecoverResetPassword);
 
 
-router.post("/createTask",TeacherAuthVerifyMiddleware,TeacherTasksController.createTask);
-router.post("/createGroup/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.createGroup);
+//router.post("/createTask",TeacherAuthVerifyMiddleware,TeacherTasksController.createTask);
+router.post("/createSubjectGroupBatchSections/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.createSubjectGroupBatchSections);
+router.post("/joinSubjectGroupBatchSections/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.joinSubjectGroupBatchSections);
 //router.post("/joinGroupBySubjId/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.createGroup2);
 router.post("/chatGroup/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.chatGroup);
 router.get("/deleteTask/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTask);

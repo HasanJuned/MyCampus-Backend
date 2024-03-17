@@ -21,7 +21,7 @@ exports.createTask = async (req, res) => {
 }
 
 /// same documents ey id te ekoi type er multiple object add korar code
-exports.createGroup = async (req, res) => {
+exports.createSubjectGroupBatchSections = async (req, res) => {
     try {
 
         let id = req.params.id;
@@ -55,14 +55,59 @@ exports.createGroup = async (req, res) => {
             const updatedDocument = await mainDocument.save();
             return res.status(200).json({ status: 'success', data: updatedDocument });
         } else {
-            console.log("One or more members already added");
-            return res.status(200).json({ status: 'fail', data: 'One or more members already added' });
+            console.log("Group is already added");
+            return res.status(200).json({ status: 'fail', data: 'One or more group already added' });
         }
     } catch (e) {
         console.error(e.toString());
         return res.status(200).json({ status: 'fail', data: e.toString() });
     }
 };
+
+exports.joinSubjectGroupBatchSections = async (req, res) => {
+    try {
+
+        let id = req.params.id;
+        let findId = {_id: id} // id found
+        const reqBody = req.body;
+        const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member]; // Assuming this is an array of member objects to add
+
+        const mainDocument = await ChatGroupModel.findById(findId);
+
+        if (!mainDocument) {
+            try {
+                let result = await ChatGroupModel.create(reqBody)
+                return res.status(200).json({ status: 'success', data: result });
+            }catch (e){
+                console.log("Main document not found");
+                return res.status(200).json({ status: 'fail', data: 'Main document not found' });
+            }
+
+
+        }
+
+        const existingMembers = mainDocument.member.filter(existingMember =>
+            members.some(newMember => existingMember.name === newMember.name)
+        );
+
+        if (existingMembers.length === 0) {
+            // Add new members to the array using $push
+            mainDocument.member.push(...members);
+
+            // Save the updated document
+            const updatedDocument = await mainDocument.save();
+            return res.status(200).json({ status: 'success', data: updatedDocument });
+        } else {
+            console.log("Group is already added");
+            return res.status(200).json({ status: 'fail', data: 'One or more group already added' });
+        }
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(200).json({ status: 'fail', data: e.toString() });
+    }
+};
+
+
 
 
 exports.chatGroup = async (req, res) => {
