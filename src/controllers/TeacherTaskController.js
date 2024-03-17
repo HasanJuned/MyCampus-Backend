@@ -92,6 +92,7 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
 
                     // Save the updated document
                     await courseTeacherGroupDocuments.save();
+                    /// last eto tuk kaj korsi
                 }
 
 
