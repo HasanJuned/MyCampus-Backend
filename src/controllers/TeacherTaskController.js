@@ -75,18 +75,26 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
         const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
 
         let courseTeacherGroupDocument = await CourseTeacherGroupModel.find(); // document searching of other collections
+        let idFind = req.params.id
+        console.log(idFind)
 
         if (courseTeacherGroupDocument) {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
                 const id3 = courseTeacherGroupDocuments._id;
-                console.log("Found document ID:", id3);
+                //console.log(id3)
 
-                // Add a new field to the previous document
-                courseTeacherGroupDocuments.set({wowo:'f'});
+                if(id3.toString() === idFind){
+                    console.log("Found document ID:", id3);
 
-                // Save the updated document
-               await courseTeacherGroupDocuments.save();
+                    // Add a new field to the previous document
+                    courseTeacherGroupDocuments.set({wowo:'f'});
+
+                    // Save the updated document
+                    await courseTeacherGroupDocuments.save();
+                }
+
+
             }
 
         } else {
