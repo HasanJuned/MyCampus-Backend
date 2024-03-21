@@ -67,8 +67,6 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
 exports.joinSubjectGroupBatchSections = async (req, res) => {
     try {
 
-        // 65f6cbde91159aeba9d32433
-
         let id = req.params.id;
         let findId = {_id: id} // id found
         const reqBody = req.body;
@@ -87,15 +85,24 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
                 if(id3.toString() === idFind){
                     console.log("Found document ID:", id3);
 
-                    // Add a new field to the previous document
-                    courseTeacherGroupDocuments.set({wowo:'f'});
+                    const existingMembers = courseTeacherGroupDocuments.member.filter(existingMember =>
+                        members.some(newMember => existingMember.name === newMember.name)
+                    );
 
-                    // Save the updated document
-                    await courseTeacherGroupDocuments.save();
-                    /// last eto tuk kaj korsi
+                    if (existingMembers.length === 0) {
+                        // Add new members to the array using $push
+                        courseTeacherGroupDocuments.member.push(...members);
+
+                        // Save the updated document
+                        const updatedDocument = await courseTeacherGroupDocuments.save();
+                        return res.status(200).json({ status: 'success', data: updatedDocument });
+                    } else {
+                        console.log("Group is already added");
+                        return res.status(200).json({ status: 'fail', data: 'Already added' });
+                    }
+
+
                 }
-
-
             }
 
         } else {
@@ -116,21 +123,21 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
 
         }
 
-        const existingMembers = mainDocument.member.filter(existingMember =>
-            members.some(newMember => existingMember.name === newMember.name)
-        );
-
-        if (existingMembers.length === 0) {
-            // Add new members to the array using $push
-            mainDocument.member.push(...members);
-
-            // Save the updated document
-            const updatedDocument = await mainDocument.save();
-            return res.status(200).json({ status: 'success', data: updatedDocument });
-        } else {
-            console.log("Group is already added");
-            return res.status(200).json({ status: 'fail', data: 'One or more group already added' });
-        }
+        // const existingMembers = mainDocument.member.filter(existingMember =>
+        //     members.some(newMember => existingMember.name === newMember.name)
+        // );
+        //
+        // if (existingMembers.length === 0) {
+        //     // Add new members to the array using $push
+        //     mainDocument.member.push(...members);
+        //
+        //     // Save the updated document
+        //     const updatedDocument = await mainDocument.save();
+        //     return res.status(200).json({ status: 'success', data: updatedDocument });
+        // } else {
+        //     console.log("Group is already added");
+        //     return res.status(200).json({ status: 'fail', data: 'One or more group already added' });
+        // }
     } catch (e) {
         console.error(e.toString());
         return res.status(200).json({ status: 'fail', data: e.toString() });
