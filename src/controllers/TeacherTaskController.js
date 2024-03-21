@@ -97,7 +97,6 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
                         const updatedDocument = await courseTeacherGroupDocuments.save();
                         return res.status(200).json({ status: 'success', data: updatedDocument });
                     } else {
-                        console.log("Group is already added");
                         return res.status(200).json({ status: 'fail', data: 'Already added' });
                     }
 

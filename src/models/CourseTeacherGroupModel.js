@@ -13,7 +13,7 @@ const MemberInfoSchema = mongoose.Schema({
     designation: { type: String },
     department: { type: String },
     section: { type: String },
-    //chat:[ChatSchema],
+    chat:[ChatSchema],
     timestamp: { type: Date, default: Date.now }
 }, { versionKey: false });
 
@@ -25,7 +25,6 @@ const DataSchema=mongoose.Schema({
     courseTitle:{type:String},
     email:{type:String},
     member:[MemberInfoSchema],
-    wowo:{type: String},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
 
