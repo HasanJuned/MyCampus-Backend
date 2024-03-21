@@ -159,7 +159,6 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
                         console.log('Invalid Member');
                     }
                 }
-
             }
 
         } else {
