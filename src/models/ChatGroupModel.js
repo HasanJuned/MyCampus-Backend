@@ -27,7 +27,7 @@ const DataSchema=mongoose.Schema({
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
 
-const ChatGroupModel=mongoose.model('javaaa',DataSchema); // ekane per group er jonno alada alada collection banaate hobe
+const ChatGroupModel=mongoose.model('javaaa',ChatSchema); // ekane per group er jonno alada alada collection banaate hobe
 //const ChatModel = mongoose.model('ChatModel', ChatSchema);
 const MemberModel = mongoose.model('MemberInfsddo', MemberInfoSchema);
 module.exports = ChatGroupModel
