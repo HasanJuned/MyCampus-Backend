@@ -152,7 +152,7 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
                     //console.log("Member's Object ID:", memberObjectId);
                     if (memberObjectId.toString() === id9) {
                         //console.log('Found');
-                        member.chat.push(reqBody)
+                        member.chat.push(reqBody) // ono aslam
                         await courseTeacherGroupDocuments.save();
 
                     } else {
