@@ -173,8 +173,6 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
 };
 
 
-
-
 exports.chatGroup = async (req, res) => {
 
     try {

@@ -11,7 +11,7 @@ exports.Registration = async (req, res) => {
         res.status(200).json({status: "success", data: result})
 
     } catch (e) {
-        res.status(200).json({status: "fail", data: "Something went wrong"})
+        res.status(401).json({status: "fail", data: "Something went wrong"})
     }
 
 }
@@ -32,11 +32,11 @@ exports.Login = async (req, res) => {
 
 
         } else {
-            res.status(200).json({status: "fail", data: "No user found. Try again!"})
+            res.status(401).json({status: "fail", data: "No user found. Try again!"})
         }
 
     } catch (e) {
-        res.status(200).json({status: "fail", data: "Something went wrong"})
+        res.status(401).json({status: "fail", data: "Something went wrong"})
     }
 
 }
@@ -48,7 +48,7 @@ exports.AvailableTeachers = async (req, res) => {
         res.status(200).json({status: "success", data: result})
 
     } catch (e) {
-        res.status(200).json({status: "fail", data: "No user found. Try again!"})
+        res.status(401).json({status: "fail", data: "No user found. Try again!"})
     }
 
 }
@@ -60,7 +60,7 @@ exports.ProfileDetails = async (req, res) => {
         res.status(200).json({status: 'success', data: result});
     } catch (e) {
         console.error(e);
-        return res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+        return res.status(401).json({status: 'fail', data: 'Internal Server Error'});
     }
 };
 
@@ -72,7 +72,7 @@ exports.ProfileUpdate = async (req, res) => {
         res.status(200).json({status: 'success', data: result});
     } catch (e) {
         console.error(e);
-        return res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+        return res.status(401).json({status: 'fail', data: 'Internal Server Error'});
     }
 };
 
@@ -92,7 +92,7 @@ exports.RecoverVerifyEmail = async (req, res) => {
 
 
     } else {
-        res.status(200).json({status: "fail", data: "No user found. Try again!"})
+        res.status(401).json({status: "fail", data: "No user found. Try again!"})
     }
 
 }
@@ -112,7 +112,7 @@ exports.RecoverVerifyOtp = async (req, res) => {
 
 
     } else {
-        res.status(200).json({status: "fail", data: "Invalid Otp"})
+        res.status(401).json({status: "fail", data: "Invalid Otp"})
     }
 
 }
@@ -132,7 +132,7 @@ exports.RecoverResetPassword = async (req, res) => {
 
 
     } else {
-        res.status(200).json({status: "fail", data: "Password reset failed"})
+        res.status(401).json({status: "fail", data: "Password reset failed"})
     }
 
 }
