@@ -6,6 +6,7 @@ const TeacherTasksController = require('../controllers/TeacherTaskController')
 
 router.post('/Registration', TeachersAuthController.Registration)
 router.post('/Login', TeachersAuthController.Login)
+router.get('/AvailableTeachers', TeachersAuthController.AvailableTeachers)
 router.get('/ProfileDetails', TeacherAuthVerifyMiddleware, TeachersAuthController.ProfileDetails)
 router.post('/ProfileUpdate', TeacherAuthVerifyMiddleware, TeachersAuthController.ProfileUpdate)
 router.get("/RecoverVerifyEmail/:email",TeachersAuthController.RecoverVerifyEmail);
