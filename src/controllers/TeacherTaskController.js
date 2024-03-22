@@ -137,23 +137,24 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
 
         let courseTeacherGroupDocument = await CourseTeacherGroupModel.find(); // document searching of other collections
         let idFind = req.params.id
-        console.log(idFind)
+        console.log('g',idFind)
 
         if (courseTeacherGroupDocument) {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
                 const id3 = courseTeacherGroupDocuments._id;
                 const membersObjectId = courseTeacherGroupDocuments.member.map(member => member._id);
-                console.log(membersObjectId)
+                console.log('j',membersObjectId)
 
                 for (let j = 0; j < courseTeacherGroupDocuments.member.length; j++) {
                     const member = courseTeacherGroupDocuments.member[j];
                     const memberObjectId = member._id;
-                    //console.log("Member's Object ID:", memberObjectId);
+                    console.log("Member's Object ID:", memberObjectId);
                     if (memberObjectId.toString() === id9) {
-                        //console.log('Found');
+                        console.log('Found');
                         member.chat.push(reqBody) // ono aslam
                         await courseTeacherGroupDocuments.save();
+                        return res.status(200).json({ status: 'success', data: reqBody});
 
                     } else {
                         console.log('Invalid Member');
