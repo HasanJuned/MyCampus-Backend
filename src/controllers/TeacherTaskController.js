@@ -66,9 +66,6 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
 
 exports.joinSubjectGroupBatchSections = async (req, res) => {
     try {
-
-        let id = req.params.id;
-        let findId = {_id: id} // id found
         const reqBody = req.body;
         const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
 
@@ -107,19 +104,6 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
         } else {
             console.log("No documents found in CourseTeacherGroupModel collection.");
         }
-
-        const mainDocument = await ChatGroupModel.findById(findId);
-
-        if (!mainDocument) {
-            try {
-                let result = await ChatGroupModel.create(reqBody)
-                return res.status(200).json({ status: 'success', data: result });
-            }catch (e){
-                console.log("Main document not found");
-                return res.status(200).json({ status: 'fail', data: 'Main document not found' });
-            }
-        }
-
     } catch (e) {
         console.error(e.toString());
         return res.status(200).json({ status: 'fail', data: e.toString() });
@@ -172,23 +156,6 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
     }
 };
 
-
-exports.chatGroup = async (req, res) => {
-
-    try {
-
-        let reqBody = req.body;
-        reqBody.email = req.headers['email'];
-        let result = await ChatGroupModel.create(reqBody)
-        res.status(200).json({status: 'success', data: result});
-
-
-    } catch (e) {
-        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
-    }
-
-
-}
 
 exports.deleteTask = async (req, res) => {
     try {
