@@ -1,6 +1,6 @@
 const TeacherTaskModel = require("../models/TeacherTaskModel")
 const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel")
-const ChatGroupModel = require("../models/ChatGroupModel")
+const TeacherAddTask = require("../models/TeacherAddTaskModel");
 
 
 /// createBatchSectionCourse
@@ -156,6 +156,20 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
     }
 };
 
+exports.teacherAddTask = async (req, res) => {
+    try {
+
+        let reqBody = req.body
+        await TeacherAddTask.create(reqBody)
+        let result = await TeacherAddTask.find()
+        return res.status(200).json({ status: 'success', data: result });
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({ status: 'fail', data: 'Not Found' });
+    }
+};
+
 
 exports.deleteTask = async (req, res) => {
     try {
@@ -237,6 +251,12 @@ exports.AvailableCourseAndTeacher = async (req, res) => {
 
         let result = await CourseTeacherGroupModel.find()
         res.status(200).json({status: 'success', data: result});
+
+        // let reqBody = req.body
+        //
+        // let result = await Cou.create(reqBody)
+        // let o = await Cou.find();
+        // res.status(200).json({status: 'success', data: o});
 
 
     } catch (e) {
