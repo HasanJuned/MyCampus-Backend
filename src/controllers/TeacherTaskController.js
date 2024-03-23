@@ -3,23 +3,6 @@ const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel")
 const TeacherAddTask = require("../models/TeacherAddTaskModel");
 
 
-/// createBatchSectionCourse
-exports.createTask = async (req, res) => {
-
-    try {
-        let reqBody = req.body;
-        reqBody.email = req.headers['email'];
-        let result1 = await TeacherTaskModel.create(reqBody)
-        res.status(200).json({status: 'success', data: result1});
-
-
-    } catch (e) {
-        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
-    }
-
-
-}
-
 /// same documents ey id te ekoi type er multiple object add korar code
 exports.createSubjectGroupBatchSections = async (req, res) => {
     try {
