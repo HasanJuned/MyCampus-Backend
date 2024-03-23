@@ -1,6 +1,8 @@
 const TeacherTaskModel = require("../models/TeacherTaskModel")
 const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel")
 const TeacherAddTask = require("../models/TeacherAddTaskModel");
+const FacultyMeeting = require("../models/FacultyMeetingModel");
+const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
 
 
 /// same documents ey id te ekoi type er multiple object add korar code
@@ -150,6 +152,34 @@ exports.teacherAddTask = async (req, res) => {
     } catch (e) {
         console.error(e.toString());
         return res.status(404).json({ status: 'fail', data: 'Not Found' });
+    }
+};
+
+exports.facultyMeeting = async (req, res) => {
+    try {
+
+        let reqBody = req.body
+        await FacultyMeeting.create(reqBody)
+        let result = await FacultyMeeting.find()
+        return res.status(200).json({ status: 'success', data: result });
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({ status: 'fail', data: 'Try Again' });
+    }
+};
+
+exports.announcement = async (req, res) => {
+    try {
+
+        let reqBody = req.body
+        await TeacherAnnouncement.create(reqBody)
+        let result = await TeacherAnnouncement.find()
+        return res.status(200).json({ status: 'success', data: result });
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({ status: 'fail', data: 'Try Again' });
     }
 };
 
