@@ -228,7 +228,7 @@ exports.deleteTeacherAnnouncement = async (req, res) => {
         res.status(200).json({status: 'fail', data: 'Internal Server Error'});
 
     }
-}
+}//
 
 exports.updateSubjectGroupDetails = async (req, res) => {
 
