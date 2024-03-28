@@ -28,7 +28,9 @@ exports.Login = async (req, res) => {
             }
 
             let token = jwt.sign(Payload, 'SecretKey1234567890');
-            res.status(200).json({status: "success", data: reqBody, token: token})
+            let email = req.headers['email'];
+            let result2 = await TeachersAuthModel.find(reqBody);
+            res.status(200).json({status: "success", data: result2, token: token})
 
 
         } else {
