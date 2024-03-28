@@ -190,12 +190,38 @@ exports.announcement = async (req, res) => {
     }
 };
 
-exports.deleteTask = async (req, res) => {
+exports.deleteTeacherTask = async (req, res) => {
     try {
         let id = req.params.id;
         let deleteTask = {_id: id}
 
-        let result = await TeacherTaskModel.deleteOne(deleteTask)
+        let result = await TeacherAddTask.deleteOne(deleteTask)
+        res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+
+    }
+}
+exports.deleteFacultyMeeting = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let deleteTask = {_id: id}
+
+        let result = await FacultyMeeting.deleteOne(deleteTask)
+        res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+
+    }
+}
+exports.deleteTeacherAnnouncement = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let deleteTask = {_id: id}
+
+        let result = await TeacherAnnouncement.deleteOne(deleteTask)
         res.status(200).json({status: 'success', data: result});
 
     } catch (e) {
