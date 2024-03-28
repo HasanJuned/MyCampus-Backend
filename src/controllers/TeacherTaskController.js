@@ -12,7 +12,7 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
         let id = req.params.id;
         let findId = {_id: id} // id found
         const reqBody = req.body;
-        const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member]; // Assuming this is an array of member objects to add
+        const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
 
         const mainDocument = await CourseTeacherGroupModel.findById(null);
 

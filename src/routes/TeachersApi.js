@@ -26,7 +26,6 @@ router.get("/announcement/:announcement/:batch",TeacherAuthVerifyMiddleware, Tea
 router.get("/deleteTeacherTask/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTeacherTask);
 router.get("/deleteFacultyMeeting/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteFacultyMeeting);
 router.get("/deleteTeacherAnnouncement/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTeacherAnnouncement);
-
 router.post("/updateSubjectGroupDetails/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.updateSubjectGroupDetails);
 
 router.get("/listTaskByStatus/:batch",TeacherAuthVerifyMiddleware,TeacherTasksController.listTaskByStatus);
