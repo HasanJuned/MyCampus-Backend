@@ -230,16 +230,16 @@ exports.deleteTeacherAnnouncement = async (req, res) => {
     }
 }
 
-exports.updateTaskStatus = async (req, res) => {
+exports.updateSubjectGroupDetails = async (req, res) => {
 
     try {
 
         let id = req.params.id;
-        let courseCode = req.params.courseCode;
+        // let courseCode = req.params.courseCode;
         let updateTask = {_id: id};
-        let reqBody = {courseCode: courseCode};
+        let reqBody = req.body;
 
-        let result = await TeacherTaskModel.updateOne(updateTask, reqBody)
+        let result = await CourseTeacherGroupModel.updateOne(updateTask, reqBody)
         res.status(200).json({status: 'success', data: result});
 
 
