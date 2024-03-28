@@ -1,6 +1,7 @@
 const  mongoose=require('mongoose');
 
 const teacherAddTask = mongoose.Schema({
+    email: {type: String},
     batch: { type: String },
     section: { type: String },
     courseTitle: { type: String },

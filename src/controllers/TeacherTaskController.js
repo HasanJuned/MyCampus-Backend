@@ -145,8 +145,9 @@ exports.teacherAddTask = async (req, res) => {
     try {
 
         let reqBody = req.params
-        await TeacherAddTask.create(reqBody)
-        let result = await TeacherAddTask.find()
+        let email = req.headers['email']
+        await TeacherAddTask.create({email:email,...reqBody})
+        let result = await TeacherAddTask.find({email:email})
         return res.status(200).json({ status: 'success', data: result });
 
     } catch (e) {
@@ -159,8 +160,10 @@ exports.facultyMeeting = async (req, res) => {
     try {
 
         let reqBody = req.params
-        await FacultyMeeting.create(reqBody)
-        let result = await FacultyMeeting.find()
+        let email = req.headers['email']
+        //console.log(email)
+        await FacultyMeeting.create({email: email, ...reqBody})
+        let result = await FacultyMeeting.find({email: email})
         return res.status(200).json({ status: 'success', data: result });
 
     } catch (e) {
@@ -173,10 +176,13 @@ exports.announcement = async (req, res) => {
     try {
 
         let reqBody = req.params
-        console.log(reqBody)
-        await TeacherAnnouncement.create(reqBody)
-        let result = await TeacherAnnouncement.find()
-        return res.status(200).json({ status: 'success', data: result });
+        let email = req.headers['email']
+        //console.log(reqBody2)
+        await TeacherAnnouncement.create({email:email, ...reqBody})
+        let result = await TeacherAnnouncement.find({email:email});
+        console.log(result)
+
+        return res.status(200).json({ status: 'success', data: result});
 
     } catch (e) {
         console.error(e.toString());
