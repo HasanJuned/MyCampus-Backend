@@ -172,7 +172,8 @@ exports.facultyMeeting = async (req, res) => {
 exports.announcement = async (req, res) => {
     try {
 
-        let reqBody = req.body
+        let reqBody = req.params
+        console.log(reqBody)
         await TeacherAnnouncement.create(reqBody)
         let result = await TeacherAnnouncement.find()
         return res.status(200).json({ status: 'success', data: result });
