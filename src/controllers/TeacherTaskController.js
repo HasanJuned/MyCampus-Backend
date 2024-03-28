@@ -144,7 +144,7 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
 exports.teacherAddTask = async (req, res) => {
     try {
 
-        let reqBody = req.body
+        let reqBody = req.params
         await TeacherAddTask.create(reqBody)
         let result = await TeacherAddTask.find()
         return res.status(200).json({ status: 'success', data: result });
@@ -158,7 +158,7 @@ exports.teacherAddTask = async (req, res) => {
 exports.facultyMeeting = async (req, res) => {
     try {
 
-        let reqBody = req.body
+        let reqBody = req.params
         await FacultyMeeting.create(reqBody)
         let result = await FacultyMeeting.find()
         return res.status(200).json({ status: 'success', data: result });
