@@ -159,10 +159,26 @@ exports.teacherAddTask = async (req, res) => {
 exports.facultyMeeting = async (req, res) => {
     try {
 
-        let reqBody = req.params
+        let reqBody = req.body
         let email = req.headers['email']
         //console.log(email)
         await FacultyMeeting.create({email: email, ...reqBody})
+        let result = await FacultyMeeting.find({email: email})
+        return res.status(200).json({ status: 'success', data: reqBody});
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({ status: 'fail', data: 'Try Again' });
+    }
+};
+
+exports.showFacultyMeeting = async (req, res) => {
+    try {
+
+        let reqBody = req.params
+        let email = req.headers['email']
+        //console.log(email)
+        //await FacultyMeeting.create({email: email, ...reqBody})
         let result = await FacultyMeeting.find({email: email})
         return res.status(200).json({ status: 'success', data: result });
 
@@ -175,12 +191,30 @@ exports.facultyMeeting = async (req, res) => {
 exports.announcement = async (req, res) => {
     try {
 
-        let reqBody = req.params
+        let reqBody = req.body
         let email = req.headers['email']
         //console.log(reqBody2)
         await TeacherAnnouncement.create({email:email, ...reqBody})
         let result = await TeacherAnnouncement.find({email:email});
         console.log(result)
+
+        return res.status(200).json({ status: 'success', data: reqBody});
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({ status: 'fail', data: 'Try Again' });
+    }
+};
+
+exports.showAnnouncement = async (req, res) => {
+    try {
+
+        let reqBody = req.params
+        let email = req.headers['email']
+        //console.log(reqBody2)
+        //await TeacherAnnouncement.find({email:email})
+        let result = await TeacherAnnouncement.find({email:email});
+        //console.log(result)
 
         return res.status(200).json({ status: 'success', data: result});
 
