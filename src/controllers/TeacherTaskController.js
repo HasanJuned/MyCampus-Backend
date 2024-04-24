@@ -15,7 +15,7 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
         const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
 
         const mainDocument = await CourseTeacherGroupModel.find(
-            {batch: reqBody.batch, section: reqBody.section, courseCode: reqBody.courseCode}
+            {batch: reqBody.batch, courseCode: reqBody.courseCode, courseTitle: reqBody.courseTitle}
         ).count();
         console.log(mainDocument)
 
