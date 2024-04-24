@@ -14,38 +14,44 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
         const reqBody = req.body;
         const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
 
-        const mainDocument = await CourseTeacherGroupModel.findById(null);
+        const mainDocument = await CourseTeacherGroupModel.find(
+            {batch: reqBody.batch, section: reqBody.section, courseCode: reqBody.courseCode}
+        ).count();
+        console.log(mainDocument)
 
         if (!mainDocument) {
             try {
                 let result = await CourseTeacherGroupModel.create(reqBody)
-                return res.status(200).json({ status: 'success', data: result });
-            }catch (e){
+                return res.status(200).json({status: 'success', data: result});
+            } catch (e) {
                 console.log("Main document not found");
-                return res.status(200).json({ status: 'fail', data: 'Main document not found' });
+                return res.status(400).json({status: 'fail', data: 'Group is already added!'});
             }
 
 
+        }else{
+            return res.status(400).json({status: 'fail', data: 'Group is already added!'});
+
         }
 
-        const existingMembers = mainDocument.member.filter(existingMember =>
-            members.some(newMember => existingMember.name === newMember.name)
-        );
-
-        if (existingMembers.length === 0) {
-            // Add new members to the array using $push
-            mainDocument.member.push(...members);
-
-            // Save the updated document
-            const updatedDocument = await mainDocument.save();
-            return res.status(200).json({ status: 'success', data: updatedDocument });
-        } else {
-            console.log("Group is already added");
-            return res.status(200).json({ status: 'fail', data: 'One or more group already added' });
-        }
+        // const existingMembers = mainDocument.member.filter(existingMember =>
+        //     members.some(newMember => existingMember.name === newMember.name)
+        // );
+        //
+        // if (existingMembers.length === 0) {
+        //     // Add new members to the array using $push
+        //     mainDocument.member.push(...members);
+        //
+        //     // Save the updated document
+        //     const updatedDocument = await mainDocument.save();
+        //     return res.status(200).json({status: 'success', data: updatedDocument});
+        // } else {
+        //     console.log("Group is already added");
+        //     return res.status(200).json({status: 'fail', data: 'One or more group already added'});
+        // }
     } catch (e) {
         console.error(e.toString());
-        return res.status(200).json({ status: 'fail', data: e.toString() });
+        return res.status(200).json({status: 'fail', data: e.toString()});
     }
 };
 
@@ -64,7 +70,7 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
                 const id3 = courseTeacherGroupDocuments._id;
                 //const membersObjectId = courseTeacherGroupDocuments.member.map(member => member._id);
 
-                if(id3.toString() === idFind){
+                if (id3.toString() === idFind) {
                     console.log("Found document ID:", id3);
 
                     const existingMembers = courseTeacherGroupDocuments.member.filter(existingMember =>
@@ -77,9 +83,9 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
 
                         // Save the updated document
                         const updatedDocument = await courseTeacherGroupDocuments.save();
-                        return res.status(200).json({ status: 'success', data: updatedDocument });
-                    }else {
-                        return res.status(200).json({ status: 'fail', data: 'Already added' });
+                        return res.status(200).json({status: 'success', data: updatedDocument});
+                    } else {
+                        return res.status(200).json({status: 'fail', data: 'Already added'});
                     }
 
 
@@ -91,7 +97,7 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
         }
     } catch (e) {
         console.error(e.toString());
-        return res.status(200).json({ status: 'fail', data: e.toString() });
+        return res.status(200).json({status: 'fail', data: e.toString()});
     }
 };
 
@@ -106,14 +112,14 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
 
         let courseTeacherGroupDocument = await CourseTeacherGroupModel.find(); // document searching of other collections
         let idFind = req.params.id
-        console.log('g',idFind)
+        console.log('g', idFind)
 
         if (courseTeacherGroupDocument) {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
                 const id3 = courseTeacherGroupDocuments._id;
                 const membersObjectId = courseTeacherGroupDocuments.member.map(member => member._id);
-                console.log('j',membersObjectId)
+                console.log('j', membersObjectId)
 
                 for (let j = 0; j < courseTeacherGroupDocuments.member.length; j++) {
                     const member = courseTeacherGroupDocuments.member[j];
@@ -123,7 +129,7 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
                         console.log('Found');
                         member.chat.push(reqBody) // ono aslam
                         await courseTeacherGroupDocuments.save();
-                        return res.status(200).json({ status: 'success', data: reqBody});
+                        return res.status(200).json({status: 'success', data: reqBody});
 
                     } else {
                         console.log('Invalid Member');
@@ -137,7 +143,7 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
 
     } catch (e) {
         console.error(e.toString());
-        return res.status(200).json({ status: 'fail', data: e.toString() });
+        return res.status(200).json({status: 'fail', data: e.toString()});
     }
 };
 
@@ -146,13 +152,13 @@ exports.teacherAddTask = async (req, res) => {
 
         let reqBody = req.params
         let email = req.headers['email']
-        await TeacherAddTask.create({email:email,...reqBody})
-        let result = await TeacherAddTask.find({email:email})
-        return res.status(200).json({ status: 'success', data: result });
+        await TeacherAddTask.create({email: email, ...reqBody})
+        let result = await TeacherAddTask.find({email: email})
+        return res.status(200).json({status: 'success', data: result});
 
     } catch (e) {
         console.error(e.toString());
-        return res.status(404).json({ status: 'fail', data: 'Not Found' });
+        return res.status(404).json({status: 'fail', data: 'Not Found'});
     }
 };
 
@@ -164,11 +170,11 @@ exports.facultyMeeting = async (req, res) => {
         //console.log(email)
         await FacultyMeeting.create({email: email, ...reqBody})
         let result = await FacultyMeeting.find({email: email})
-        return res.status(200).json({ status: 'success', data: reqBody});
+        return res.status(200).json({status: 'success', data: reqBody});
 
     } catch (e) {
         console.error(e.toString());
-        return res.status(404).json({ status: 'fail', data: 'Try Again' });
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
     }
 };
 
@@ -180,11 +186,11 @@ exports.showFacultyMeeting = async (req, res) => {
         //console.log(email)
         //await FacultyMeeting.create({email: email, ...reqBody})
         let result = await FacultyMeeting.find({email: email})
-        return res.status(200).json({ status: 'success', data: result });
+        return res.status(200).json({status: 'success', data: result});
 
     } catch (e) {
         console.error(e.toString());
-        return res.status(404).json({ status: 'fail', data: 'Try Again' });
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
     }
 };
 
@@ -194,15 +200,15 @@ exports.announcement = async (req, res) => {
         let reqBody = req.body
         let email = req.headers['email']
         //console.log(reqBody2)
-        await TeacherAnnouncement.create({email:email, ...reqBody})
-        let result = await TeacherAnnouncement.find({email:email});
+        await TeacherAnnouncement.create({email: email, ...reqBody})
+        let result = await TeacherAnnouncement.find({email: email});
         console.log(result)
 
-        return res.status(200).json({ status: 'success', data: reqBody});
+        return res.status(200).json({status: 'success', data: reqBody});
 
     } catch (e) {
         console.error(e.toString());
-        return res.status(404).json({ status: 'fail', data: 'Try Again' });
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
     }
 };
 
@@ -213,14 +219,14 @@ exports.showAnnouncement = async (req, res) => {
         let email = req.headers['email']
         //console.log(reqBody2)
         //await TeacherAnnouncement.find({email:email})
-        let result = await TeacherAnnouncement.find({email:email});
+        let result = await TeacherAnnouncement.find({email: email});
         //console.log(result)
 
-        return res.status(200).json({ status: 'success', data: result});
+        return res.status(200).json({status: 'success', data: result});
 
     } catch (e) {
         console.error(e.toString());
-        return res.status(404).json({ status: 'fail', data: 'Try Again' });
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
     }
 };
 
