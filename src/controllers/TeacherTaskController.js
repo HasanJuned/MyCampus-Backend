@@ -334,7 +334,9 @@ exports.AvailableCourseAndTeacher = async (req, res) => {
 
     try {
 
-        let result = await CourseTeacherGroupModel.find()
+        const email = req.headers['email']
+
+        let result = await CourseTeacherGroupModel.find({email: email})
         res.status(200).json({status: 'success', data: result});
 
         // let reqBody = req.body
@@ -345,7 +347,7 @@ exports.AvailableCourseAndTeacher = async (req, res) => {
 
 
     } catch (e) {
-        res.status(200).json({status: 'fail', data: 'Internal Server Error'});
+        res.status(400).json({status: 'fail', data: 'Try again'});
     }
 
 
