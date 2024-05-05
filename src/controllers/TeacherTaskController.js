@@ -352,3 +352,47 @@ exports.AvailableCourseAndTeacher = async (req, res) => {
 
 
 }
+
+exports.uploadVideo = async (req, res) => {
+    try {
+
+        let reqBody = req.file
+        let email = req.headers['email']
+
+        if (!req.file) {
+            return res.status(400).json({ status: 'fail', message: 'No file uploaded' });
+        }
+
+        const uploadedFile = req.file;
+        const filePath = uploadedFile.path;
+
+        await FacultyMeeting.create({ email: email, filePath: filePath, ...reqBody });
+        const result = await FacultyMeeting.find({ email: email });
+
+        return res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
+    }
+};//
+
+exports.fetchVideo = async (req, res) => {
+    try {
+        // Retrieve the document by its ID
+        const meeting = await FacultyMeeting.findById(req.params.id);
+
+        if (!meeting) {
+            return res.status(404).json({ error: 'Meeting not found' });
+        }
+
+        // Extract the file path
+        const filePath = meeting.filePath;
+
+        // Serve the video file
+        res.sendFile(path.resolve(filePath));
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};//

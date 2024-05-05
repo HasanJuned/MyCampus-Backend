@@ -4,6 +4,17 @@ const TeachersAuthController = require('../controllers/TeachersAuthController')
 const TeacherAuthVerifyMiddleware=require("../middleWare/TeacherAuthVerifyMiddleWare");
 const TeacherTasksController = require('../controllers/TeacherTaskController')
 
+const multer = require("multer");
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/') // Where to store the uploaded files
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname) // Use original filename
+    }
+});
+const upload = multer({ storage: storage,limits: { fileSize: 100 * 1024 * 1024 } });
+
 router.post('/Registration', TeachersAuthController.Registration)
 router.get('/Login/:email/:password', TeachersAuthController.Login)
 router.get('/AvailableTeachers', TeachersAuthController.AvailableTeachers)
@@ -36,6 +47,9 @@ router.get("/taskStatusCount",TeacherAuthVerifyMiddleware,TeacherTasksController
 
 // available
 router.get("/showFacultySubGrpBatchSec", TeacherAuthVerifyMiddleware, TeacherTasksController.AvailableCourseAndTeacher);
+
+router.post("/facultyMeeting2",upload.single('video'), TeacherTasksController.uploadVideo);
+router.get("/video/:id", TeacherTasksController.fetchVideo);
 
 
 module.exports = router;
