@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         cb(null, file.originalname) // Use original filename
     }
 });
-const upload = multer({ storage: storage,limits: { fileSize: 100 * 1024 * 1024 } });
+const upload = multer({ storage: storage,limits: { fileSize: 100 * 1024*1024}});
 
 router.post('/Registration', TeachersAuthController.Registration)
 router.get('/Login/:email/:password', TeachersAuthController.Login)
@@ -48,7 +48,7 @@ router.get("/taskStatusCount",TeacherAuthVerifyMiddleware,TeacherTasksController
 // available
 router.get("/showFacultySubGrpBatchSec", TeacherAuthVerifyMiddleware, TeacherTasksController.AvailableCourseAndTeacher);
 
-router.post("/facultyMeeting2",upload.single('video'), TeacherTasksController.uploadVideo);
+router.post("/facultyMeeting2",TeacherAuthVerifyMiddleware, upload.single('video'), TeacherTasksController.uploadVideo);
 router.get("/video/:id", TeacherTasksController.fetchVideo);
 
 module.exports = router;

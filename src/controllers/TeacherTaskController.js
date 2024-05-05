@@ -3,6 +3,7 @@ const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel")
 const TeacherAddTask = require("../models/TeacherAddTaskModel");
 const FacultyMeeting = require("../models/FacultyMeetingModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
+const path = require("path");
 
 
 /// same documents ey id te ekoi type er multiple object add korar code
@@ -366,7 +367,7 @@ exports.uploadVideo = async (req, res) => {
         const uploadedFile = req.file;
         const filePath = uploadedFile.path;
 
-        await FacultyMeeting.create({ email: email, filePath: filePath, ...reqBody });
+        await FacultyMeeting.create({ email: email, fileType: filePath, ...reqBody });
         const result = await FacultyMeeting.find({ email: email });
 
         return res.status(200).json({status: 'success', data: result});
@@ -375,7 +376,8 @@ exports.uploadVideo = async (req, res) => {
         console.error(e.toString());
         return res.status(404).json({status: 'fail', data: 'Try Again'});
     }
-};//
+};
+
 
 exports.fetchVideo = async (req, res) => {
     try {
@@ -387,12 +389,12 @@ exports.fetchVideo = async (req, res) => {
         }
 
         // Extract the file path
-        const filePath = meeting.filePath;
+        const filePath = meeting.fileType;
 
         // Serve the video file
         res.sendFile(path.resolve(filePath));
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: 'Server error'});
     }
 };//

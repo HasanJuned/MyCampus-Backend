@@ -2,6 +2,7 @@ const  mongoose=require('mongoose');
 
 const facultyMeeting = mongoose.Schema({
     email: {type: String},
+    fileType: {type: String},
     title: { type: String },
     date: { type: String },
     timestamp: { type: Date, default: Date.now }
