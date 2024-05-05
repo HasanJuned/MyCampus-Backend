@@ -50,6 +50,6 @@ router.get("/showFacultySubGrpBatchSec", TeacherAuthVerifyMiddleware, TeacherTas
 
 router.post("/facultyMeeting2",upload.single('video'), TeacherTasksController.uploadVideo);
 router.get("/video/:id", TeacherTasksController.fetchVideo);
-
+//
 
 module.exports = router;
