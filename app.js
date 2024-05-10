@@ -30,20 +30,20 @@ app.use('/api/teacher', teachersRouter);
 // let URI = "mongodb+srv://<username>:<password>@cluster0.7uslu.mongodb.net/practise?retryWrites=true&w=majority";
 // let OPTION = {user: 'admin', pass:'admin', autoIndex: true}
 
-mongoose.connect("mongodb://localhost:27017/Testing")
-.then(()=>console.log('Database practise connected'))
-.catch((error)=>{
-    console.log('Failed to connect with database');
-    console.log(error);
-    process.exit(1);
-})
-//
-// mongoose.connect("mongodb+srv://softenghasan25:aEaV06X6h7vb5arU@mycampus.jnbwms4.mongodb.net/?retryWrites=true&w=majority&appName=mycampus")
+// mongoose.connect("mongodb://localhost:27017/Testing")
 // .then(()=>console.log('Database practise connected'))
 // .catch((error)=>{
 //     console.log('Failed to connect with database');
 //     console.log(error);
 //     process.exit(1);
 // })
+//
+mongoose.connect("mongodb+srv://softenghasan25:aEaV06X6h7vb5arU@mycampus.jnbwms4.mongodb.net/?retryWrites=true&w=majority&appName=mycampus")
+.then(()=>console.log('Database practise connected'))
+.catch((error)=>{
+    console.log('Failed to connect with database');
+    console.log(error);
+    process.exit(1);
+})
 
 module.exports = app;
