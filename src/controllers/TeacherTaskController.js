@@ -336,8 +336,35 @@ exports.AvailableCourseAndTeacher = async (req, res) => {
     try {
 
         const email = req.headers['email']
+        //const id = req.params.id
 
-        let result = await CourseTeacherGroupModel.find({email: email})
+        let result = await CourseTeacherGroupModel.find({ email: email })
+        console.log(result)
+        res.status(200).json({status: 'success', data: result});
+
+        // let reqBody = req.body
+        //
+        // let result = await Cou.create(reqBody)
+        // let o = await Cou.find();
+        // res.status(200).json({status: 'success', data: o});
+
+
+    } catch (e) {
+        res.status(400).json({status: 'fail', data: 'Try again'});
+    }
+
+
+}
+
+exports.AvailableCourseAndTeacher2 = async (req, res) => {
+
+    try {
+
+        const email = req.headers['email']
+        const id = req.params.id
+
+        let result = await CourseTeacherGroupModel.find({ _id: id })
+        console.log(result)
         res.status(200).json({status: 'success', data: result});
 
         // let reqBody = req.body

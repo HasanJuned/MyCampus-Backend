@@ -35,5 +35,6 @@ router.get("/taskStatusCount",TeacherAuthVerifyMiddleware,TeacherTasksController
 
 // available
 router.get("/showFacultySubGrpBatchSec", TeacherAuthVerifyMiddleware, TeacherTasksController.AvailableCourseAndTeacher);
+router.get("/showFacultySubGrpBatchSec/:id", TeacherTasksController.AvailableCourseAndTeacher2);
 
 module.exports = router;
