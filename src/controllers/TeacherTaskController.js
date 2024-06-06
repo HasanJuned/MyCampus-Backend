@@ -408,3 +408,17 @@ exports.availableCourseBatch = async (req, res) => {
     }
 
 }
+
+exports.allAnnouncement = async (req, res) => {
+
+    try {
+
+        let batch = req.params.batch
+        let result = await TeacherAnnouncement.find({batch: batch});
+        return res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(400).json({status: 'fail', data: 'Try again'});
+    }
+
+}
