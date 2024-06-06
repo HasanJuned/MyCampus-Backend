@@ -3,6 +3,7 @@ const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel")
 const TeacherAddTask = require("../models/TeacherAddTaskModel");
 const FacultyMeeting = require("../models/FacultyMeetingModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
+const Resource = require("../models/ResourceModel");
 const path = require("path");
 
 
@@ -231,6 +232,42 @@ exports.showAnnouncement = async (req, res) => {
     }
 };
 
+exports.resource = async (req, res) => {
+    try {
+
+        let reqBody = req.body
+        let email = req.headers['email']
+        //console.log(reqBody2)
+        await Resource.create({email: email, ...reqBody})
+        let result = await Resource.find({email: email});
+        console.log(result)
+
+        return res.status(200).json({status: 'success', data: reqBody});
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
+    }
+};
+
+exports.showResources = async (req, res) => {
+    try {
+
+        let reqBody = req.params
+        let email = req.headers['email']
+        //console.log(reqBody2)
+        //await TeacherAnnouncement.find({email:email})
+        let result = await Resource.find({email: email});
+        //console.log(result)
+
+        return res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
+    }
+};
+
 exports.deleteTeacherTask = async (req, res) => {
     try {
         let id = req.params.id;
@@ -331,53 +368,43 @@ exports.taskStatusCount = async (req, res) => {
 }
 
 
-exports.AvailableCourseAndTeacher = async (req, res) => {
+exports.showFacultySubGrpBatchSec = async (req, res) => {
 
     try {
 
         const email = req.headers['email']
-        //const id = req.params.id
-
         let result = await CourseTeacherGroupModel.find({ email: email })
         console.log(result)
         res.status(200).json({status: 'success', data: result});
 
-        // let reqBody = req.body
-        //
-        // let result = await Cou.create(reqBody)
-        // let o = await Cou.find();
-        // res.status(200).json({status: 'success', data: o});
-
-
     } catch (e) {
         res.status(400).json({status: 'fail', data: 'Try again'});
     }
-
-
 }
 
-exports.AvailableCourseAndTeacher2 = async (req, res) => {
+exports.availableCourseBatch = async (req, res) => {
 
     try {
-
-        const email = req.headers['email']
-        const id = req.params.id
-
-        let result = await CourseTeacherGroupModel.find({ _id: id })
-        console.log(result)
+        let result = await CourseTeacherGroupModel.aggregate([
+            {
+                $project: {
+                    _id: 1,
+                    batch: 1,
+                    courseCode: 1,
+                    courseTitle: 1,
+                    email: 1,
+                    member: {
+                        name: 1,
+                        designation: 1,
+                        department: 1
+                    }
+                }
+            }
+        ]);
         res.status(200).json({status: 'success', data: result});
-
-        // let reqBody = req.body
-        //
-        // let result = await Cou.create(reqBody)
-        // let o = await Cou.find();
-        // res.status(200).json({status: 'success', data: o});
-
 
     } catch (e) {
         res.status(400).json({status: 'fail', data: 'Try again'});
     }
 
-
 }
-

@@ -23,6 +23,8 @@ router.post("/facultyMeeting",TeacherAuthVerifyMiddleware, TeacherTasksControlle
 router.get("/showFacultyMeeting",TeacherAuthVerifyMiddleware, TeacherTasksController.showFacultyMeeting);
 router.post("/announcement",TeacherAuthVerifyMiddleware, TeacherTasksController.announcement);
 router.get("/showAnnouncement",TeacherAuthVerifyMiddleware, TeacherTasksController.showAnnouncement);
+router.post("/resource",TeacherAuthVerifyMiddleware, TeacherTasksController.resource);
+router.get("/showResources",TeacherAuthVerifyMiddleware, TeacherTasksController.showResources);
 //router.post("/joinGroupBySubjId/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.createGroup2);
 //router.post("/chatGroup/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.chatGroup);
 router.get("/deleteTeacherTask/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTeacherTask);
@@ -34,7 +36,7 @@ router.get("/listTaskByStatus/:batch",TeacherAuthVerifyMiddleware,TeacherTasksCo
 router.get("/taskStatusCount",TeacherAuthVerifyMiddleware,TeacherTasksController.taskStatusCount);
 
 // available
-router.get("/showFacultySubGrpBatchSec", TeacherAuthVerifyMiddleware, TeacherTasksController.AvailableCourseAndTeacher);
-router.get("/showFacultySubGrpBatchSec/:id", TeacherTasksController.AvailableCourseAndTeacher2);
+router.get("/showFacultySubGrpBatchSec", TeacherAuthVerifyMiddleware, TeacherTasksController.showFacultySubGrpBatchSec);
+router.get("/availableCourseBatch", TeacherTasksController.availableCourseBatch);
 
 module.exports = router;
