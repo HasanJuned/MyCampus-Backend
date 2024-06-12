@@ -19,12 +19,12 @@ exports.Registration=async (req,res)=>{
 
 exports.Login=async (req,res)=>{
 
-    let reqBody = req.body;
+    let reqBody = req.params;
 
 
     try{
         let result = await StudentsAuthModel.find(reqBody).count();
-        if(result==1){
+        if(result===1){
             let Payload = {
                 exp:Math.floor(Date.now()/1000)+(24*60*60),
                 data: reqBody['studentId']

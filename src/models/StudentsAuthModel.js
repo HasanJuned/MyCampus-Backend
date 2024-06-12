@@ -11,5 +11,5 @@ const DataSchema=mongoose.Schema({
     count:{type:String,default: '0'},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
-const UsersModel=mongoose.model('auths',DataSchema);
+const UsersModel=mongoose.model('stuAuths',DataSchema);
 module.exports=UsersModel

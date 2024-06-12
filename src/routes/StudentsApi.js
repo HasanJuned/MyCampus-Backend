@@ -3,9 +3,10 @@ const router = express.Router();
 const StudentsAuthController = require('../controllers/StudentsAuthController')
 const StudentAuthVerifyMiddleWare=require("../middleWare/StudentAuthVerifyMiddleWare");
 const StudentTasksController = require('../controllers/StudentTaskController')
+const TeachersAuthController = require("../controllers/TeachersAuthController");
 
 router.post('/Registration', StudentsAuthController.Registration)
-router.post('/Login', StudentsAuthController.Login)
+router.get('/Login/:studentId/:password', StudentsAuthController.Login)
 router.get('/ProfileDetails', StudentAuthVerifyMiddleWare, StudentsAuthController.ProfileDetails)
 router.post('/ProfileUpdate', StudentAuthVerifyMiddleWare, StudentsAuthController.ProfileUpdate)
 router.get("/RecoverVerifyEmail/:email",StudentsAuthController.RecoverVerifyEmail);
