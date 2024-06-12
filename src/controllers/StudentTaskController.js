@@ -1,4 +1,48 @@
 const TasksModel = require("../models/StudentTaskModel")
+const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel");
+const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
+
+exports.availableCourseBatch = async (req, res) => {
+
+    try {
+        let result = await CourseTeacherGroupModel.aggregate([
+            {
+                $project: {
+                    _id: 1,
+                    batch: 1,
+                    courseCode: 1,
+                    courseTitle: 1,
+                    email: 1,
+                    member: {
+                        name: 1,
+                        designation: 1,
+                        department: 1
+                    }
+                }
+            }
+        ]);
+        res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(400).json({status: 'fail', data: 'Try again'});
+    }
+
+}
+
+exports.allAnnouncement = async (req, res) => {
+
+    try {
+
+        let batch = req.params.batch
+        let result = await TeacherAnnouncement.find({batch: batch});
+        return res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(400).json({status: 'fail', data: 'Try again'});
+    }
+
+}
+
 
 exports.createTask=async(req,res)=>{
 

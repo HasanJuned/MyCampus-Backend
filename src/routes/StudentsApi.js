@@ -3,7 +3,7 @@ const router = express.Router();
 const StudentsAuthController = require('../controllers/StudentsAuthController')
 const StudentAuthVerifyMiddleWare=require("../middleWare/StudentAuthVerifyMiddleWare");
 const StudentTasksController = require('../controllers/StudentTaskController')
-const TeachersAuthController = require("../controllers/TeachersAuthController");
+const TeacherTasksController = require("../controllers/TeacherTaskController");
 
 router.post('/Registration', StudentsAuthController.Registration)
 router.get('/Login/:studentId/:password', StudentsAuthController.Login)
@@ -13,6 +13,9 @@ router.get("/RecoverVerifyEmail/:email",StudentsAuthController.RecoverVerifyEmai
 router.get("/RecoverVerifyOTP/:email/:otp",StudentsAuthController.RecoverVerifyOtp);
 router.post("/RecoverResetPassword",StudentsAuthController.RecoverResetPassword);
 
+
+router.get("/availableCourseBatch", StudentTasksController.availableCourseBatch);
+router.get("/allAnnouncement/:batch", StudentTasksController.allAnnouncement);
 
 router.post("/createTask",StudentAuthVerifyMiddleWare,StudentTasksController.createTask);
 router.get("/deleteTask/:id",StudentAuthVerifyMiddleWare,StudentTasksController.deleteTask);

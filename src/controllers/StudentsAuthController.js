@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 const OtpModel = require("../models/OtpModel")
 const TaskModel = require("../models/TeacherTaskModel")
 const SendEmailUtility = require("../utility/SendEmailUtility");
+const TeachersAuthModel = require("../models/TeachersAuthModel");
 
 exports.Registration=async (req,res)=>{
 
@@ -31,7 +32,9 @@ exports.Login=async (req,res)=>{
             }
 
             let token = jwt.sign(Payload, 'SecretKey123456789');
-            res.status(200).json({status: "success", data: reqBody, token: token})
+            let email = req.headers['email'];
+            let result2 = await StudentsAuthModel.find(reqBody);
+            res.status(200).json({status: "success", data: result2, token: token})
 
 
         }else{
