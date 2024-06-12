@@ -5,6 +5,7 @@ const DataSchema=mongoose.Schema({
     designation:{type:String},
     department:{type:String},
     password:{type:String},
+    count:{type:String,default: '1'},
     createdDate:{type:Date,default:Date.now()}
 },{versionKey:false});
 const UsersModel=mongoose.model('teachersAuths',DataSchema);
