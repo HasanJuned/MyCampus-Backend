@@ -15,7 +15,7 @@ router.post("/RecoverResetPassword",StudentsAuthController.RecoverResetPassword)
 
 
 router.get("/availableCourseBatch", StudentTasksController.availableCourseBatch);
-router.get("/allAnnouncement/:batch", StudentTasksController.allAnnouncement);
+router.get("/allAnnouncement/:batch/:type", StudentTasksController.allAnnouncement);
 router.get("/enrolledCourse/:memberName", StudentTasksController.enrolledCourse);
 
 router.post("/createTask",StudentAuthVerifyMiddleWare,StudentTasksController.createTask);

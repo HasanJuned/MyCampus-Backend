@@ -34,8 +34,10 @@ exports.allAnnouncement = async (req, res) => {
     try {
 
         let batch = req.params.batch
-        let result = await TeacherAnnouncement.find({batch: batch});
-        return res.status(200).json({status: 'success', data: result});
+        let type = req.params.type
+        let result = await TeacherAnnouncement.find({batch: batch, type: type});
+        let count = result.length;
+        return res.status(200).json({status: 'success', total: count, data: result});
 
     } catch (e) {
         res.status(400).json({status: 'fail', data: 'Try again'});
