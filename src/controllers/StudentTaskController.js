@@ -43,6 +43,31 @@ exports.allAnnouncement = async (req, res) => {
 
 }
 
+exports.enrolledCourse = async (req, res) => {
+    try {
+        const memberName = req.params.memberName;
+        if (!memberName) {
+            return res.status(400).json({ status: 'fail', data: 'Member name is required' });
+        }
+
+        console.log('Received member name:', memberName);  // Log the received member name
+
+        let result = await CourseTeacherGroupModel.find({
+            member: { $elemMatch: { name: memberName } }
+        });
+
+        if (result.length === 0) {
+            return res.status(404).json({ status: 'fail', data: 'Not Found' });
+        }
+
+        res.status(200).json({ status: 'success', data: result });
+    } catch (e) {
+        console.error('Error occurred:', e);  // Log the error for debugging
+        res.status(500).json({ status: 'fail', data: 'An error occurred' });
+    }
+}
+
+
 
 exports.createTask=async(req,res)=>{
 

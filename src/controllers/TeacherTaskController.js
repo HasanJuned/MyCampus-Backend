@@ -31,7 +31,7 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
             }
 
 
-        }else{
+        } else {
             return res.status(400).json({status: 'fail', data: 'Group is already added!'});
 
         }
@@ -87,7 +87,7 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
                         const updatedDocument = await courseTeacherGroupDocuments.save();
                         return res.status(200).json({status: 'success', data: updatedDocument});
                     } else {
-                        return res.status(200).json({status: 'fail', data: 'Already added'});
+                        return res.status(500).json({status: 'fail', data: 'Already added'});
                     }
 
 
@@ -99,7 +99,7 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
         }
     } catch (e) {
         console.error(e.toString());
-        return res.status(200).json({status: 'fail', data: e.toString()});
+        return res.status(500).json({status: 'fail', data: e.toString()});
     }
 };
 
@@ -373,7 +373,7 @@ exports.showFacultySubGrpBatchSec = async (req, res) => {
     try {
 
         const email = req.headers['email']
-        let result = await CourseTeacherGroupModel.find({ email: email })
+        let result = await CourseTeacherGroupModel.find({email: email})
         console.log(result)
         res.status(200).json({status: 'success', data: result});
 
