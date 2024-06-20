@@ -1,6 +1,7 @@
 const TasksModel = require("../models/StudentTaskModel")
 const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
+const StuAddMyTodoModel = require("../models/StuAddMyTodoModel");
 
 exports.availableCourseBatch = async (req, res) => {
 
@@ -45,6 +46,21 @@ exports.allAnnouncement = async (req, res) => {
 
 }
 
+exports.allAnnouncement2 = async (req, res) => {
+
+    try {
+
+        let batch = req.params.batch
+        let result = await TeacherAnnouncement.find({batch: batch});
+        let count = result.length;
+        return res.status(200).json({status: 'success', total: count, data: result});
+
+    } catch (e) {
+        res.status(400).json({status: 'fail', data: 'Try again'});
+    }
+
+}
+
 exports.enrolledCourse = async (req, res) => {
     try {
         const memberName = req.params.memberName;
@@ -71,17 +87,34 @@ exports.enrolledCourse = async (req, res) => {
 
 
 
-exports.createTask=async(req,res)=>{
+exports.stuAddMyTodo=async(req,res)=>{
 
     try{
         let reqBody = req.body;
         reqBody.email = req.headers['email'];
 
-        let result = await TasksModel.create(reqBody)
+        let result = await StuAddMyTodoModel.create(reqBody)
         res.status(200).json({ status: 'success', data: result });
 
     }catch(e){
-        res.status(200).json({ status: 'fail', data: 'Internal Server Error' });
+        res.status(400).json({ status: 'fail', data: 'Try again' });
+    }
+
+
+
+}
+
+exports.showStuAddMyTodo=async(req,res)=>{
+
+    try{
+        let email = req.headers['email']
+
+        let result = await StuAddMyTodoModel.find({email: email})
+        let count = result.length
+        res.status(200).json({ status: 'success', count: count, data: result });
+
+    }catch(e){
+        res.status(400).json({ status: 'fail', data: 'Try again' });
     }
 
 

@@ -16,9 +16,11 @@ router.post("/RecoverResetPassword",StudentsAuthController.RecoverResetPassword)
 
 router.get("/availableCourseBatch", StudentTasksController.availableCourseBatch);
 router.get("/allAnnouncement/:batch/:type", StudentTasksController.allAnnouncement);
+router.get("/allAnnouncement2/:batch", StudentTasksController.allAnnouncement2);
 router.get("/enrolledCourse/:memberName", StudentTasksController.enrolledCourse);
+router.post("/stuAddMyTodo",StudentAuthVerifyMiddleWare,StudentTasksController.stuAddMyTodo);
+router.get("/showStudentTodo",StudentAuthVerifyMiddleWare,StudentTasksController.showStuAddMyTodo);
 
-router.post("/createTask",StudentAuthVerifyMiddleWare,StudentTasksController.createTask);
 router.get("/deleteTask/:id",StudentAuthVerifyMiddleWare,StudentTasksController.deleteTask);
 router.get("/updateTaskStatus/:id/:status",StudentAuthVerifyMiddleWare,StudentTasksController.updateTaskStatus);
 router.get("/listTaskByStatus/:status",StudentAuthVerifyMiddleWare,StudentTasksController.listTaskByStatus);
