@@ -381,6 +381,19 @@ exports.showFacultySubGrpBatchSec = async (req, res) => {
         res.status(400).json({status: 'fail', data: 'Try again'});
     }
 }
+exports.showChats = async (req, res) => {
+
+    try {
+        const email = req.headers['email'];
+        let result = await CourseTeacherGroupModel.find({ email: email });
+        let membersOnly = result.reduce((acc, course) => {
+            return acc.concat(course.member);
+        }, []);
+        res.status(200).json({ status: 'success', data: membersOnly });
+    } catch (e) {
+        res.status(400).json({ status: 'fail', data: 'Try again' });
+    }
+}
 
 exports.availableCourseBatch = async (req, res) => {
 
