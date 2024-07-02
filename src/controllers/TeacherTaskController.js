@@ -5,6 +5,8 @@ const FacultyMeeting = require("../models/FacultyMeetingModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
 const Resource = require("../models/ResourceModel");
 const path = require("path");
+const StuAddMyTodoModel = require("../models/StuAddMyTodoModel");
+const FacAddMyTodoModel = require("../models/FacAddMyTodoModel");
 
 
 /// same documents ey id te ekoi type er multiple object add korar code
@@ -231,6 +233,38 @@ exports.showAnnouncement = async (req, res) => {
         return res.status(404).json({status: 'fail', data: 'Try Again'});
     }
 };
+
+exports.facAddMyTodo=async(req,res)=>{
+
+    try{
+        let reqBody = req.body;
+        reqBody.email = req.headers['email'];
+
+        let result = await FacAddMyTodoModel.create(reqBody)
+        res.status(200).json({ status: 'success', data: result });
+
+    }catch(e){
+        res.status(400).json({ status: 'fail', data: 'Try again' });
+    }
+
+
+
+}
+
+exports.showFacMyTodo=async(req,res)=>{
+
+    try{
+        let result = await FacAddMyTodoModel.find()
+        let count = result.length
+        res.status(200).json({ status: 'success', count: count, data: result });
+
+    }catch(e){
+        res.status(400).json({ status: 'fail', data: 'Try again' });
+    }
+
+
+
+}
 
 exports.resource = async (req, res) => {
     try {

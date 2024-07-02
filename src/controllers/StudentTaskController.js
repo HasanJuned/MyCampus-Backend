@@ -2,6 +2,8 @@ const TasksModel = require("../models/StudentTaskModel")
 const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
 const StuAddMyTodoModel = require("../models/StuAddMyTodoModel");
+const Resource = require("../models/ResourceModel");
+const StudentResourceModel = require("../models/StudentResourceModel");
 
 exports.availableCourseBatch = async (req, res) => {
 
@@ -120,6 +122,35 @@ exports.showStuAddMyTodo=async(req,res)=>{
 
 
 }
+
+exports.resource = async (req, res) => {
+    try {
+
+        let reqBody = req.body
+        let batch = req.body.batch
+        //console.log(reqBody2)
+        await StudentResourceModel.create(reqBody)
+        let result = await StudentResourceModel.find({batch: batch});
+        return res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
+    }
+};
+
+exports.showResources = async (req, res) => {
+    try {
+
+        let batch = req.params.batch
+        let result = await StudentResourceModel.find({batch: batch});
+        return res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        console.error(e.toString());
+        return res.status(404).json({status: 'fail', data: 'Try Again'});
+    }
+};
 
 exports.deleteTask=async(req,res)=>{
     try{

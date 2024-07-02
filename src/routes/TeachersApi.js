@@ -3,6 +3,8 @@ const router = express.Router();
 const TeachersAuthController = require('../controllers/TeachersAuthController')
 const TeacherAuthVerifyMiddleware=require("../middleWare/TeacherAuthVerifyMiddleWare");
 const TeacherTasksController = require('../controllers/TeacherTaskController')
+const StudentAuthVerifyMiddleWare = require("../middleWare/StudentAuthVerifyMiddleWare");
+const StudentTasksController = require("../controllers/StudentTaskController");
 
 router.post('/Registration', TeachersAuthController.Registration)
 router.get('/Login/:email/:password', TeachersAuthController.Login)
@@ -25,6 +27,8 @@ router.post("/announcement",TeacherAuthVerifyMiddleware, TeacherTasksController.
 router.get("/showAnnouncement",TeacherAuthVerifyMiddleware, TeacherTasksController.showAnnouncement);
 router.post("/resource",TeacherAuthVerifyMiddleware, TeacherTasksController.resource);
 router.get("/showResources",TeacherAuthVerifyMiddleware, TeacherTasksController.showResources);
+router.post("/facAddMyTodo",TeacherAuthVerifyMiddleware, TeacherTasksController.facAddMyTodo);
+router.get("/showFacMyTodo",TeacherAuthVerifyMiddleware,TeacherTasksController.showFacMyTodo);
 //router.post("/joinGroupBySubjId/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.createGroup2);
 //router.post("/chatGroup/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.chatGroup);
 router.get("/deleteTeacherTask/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTeacherTask);
