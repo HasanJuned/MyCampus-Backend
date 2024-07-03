@@ -109,7 +109,8 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
     try {
 
         let id = req.params.courseGroupId;
-        let id9 = req.params.memberId;
+        //let id9 = req.params.memberId;
+        let id9 = req.params.memberName;
         let findId = {_id: id} // id found
         const reqBody = req.body;
         const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
@@ -122,12 +123,12 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
                 const id3 = courseTeacherGroupDocuments._id;
-                const membersObjectId = courseTeacherGroupDocuments.member.map(member => member._id);
+                const membersObjectId = courseTeacherGroupDocuments.member.map(member => member.name);
                 console.log('j', membersObjectId)
 
                 for (let j = 0; j < courseTeacherGroupDocuments.member.length; j++) {
                     const member = courseTeacherGroupDocuments.member[j];
-                    const memberObjectId = member._id;
+                    const memberObjectId = member.name;
                     console.log("Member's Object ID:", memberObjectId);
                     if (memberObjectId.toString() === id9) {
                         console.log('Found');
