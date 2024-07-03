@@ -41,7 +41,7 @@ router.get("/taskStatusCount",TeacherAuthVerifyMiddleware,TeacherTasksController
 
 // available
 router.get("/showFacultySubGrpBatchSec", TeacherAuthVerifyMiddleware, TeacherTasksController.showFacultySubGrpBatchSec);
-router.get("/showChats", TeacherAuthVerifyMiddleware, TeacherTasksController.showChats);
+router.get("/showChats/:groupId", TeacherAuthVerifyMiddleware, TeacherTasksController.showChats);
 
 
 module.exports = router;

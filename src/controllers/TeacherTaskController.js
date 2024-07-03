@@ -420,7 +420,8 @@ exports.showChats = async (req, res) => {
 
     try {
         const email = req.headers['email'];
-        let result = await CourseTeacherGroupModel.find({ email: email });
+        const groupId = req.params.groupId;
+        let result = await CourseTeacherGroupModel.find({ email: email, _id: groupId});
         let membersOnly = result.reduce((acc, course) => {
             return acc.concat(course.member);
         }, []);
