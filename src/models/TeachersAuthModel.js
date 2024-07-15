@@ -4,6 +4,7 @@ const DataSchema=mongoose.Schema({
     fullName:{type:String},
     designation:{type:String},
     department:{type:String},
+    shortWords:{type:String},
     password:{type:String},
     count:{type:String,default: '1'},
     createdDate:{type:Date,default:Date.now()}
