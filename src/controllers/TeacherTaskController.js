@@ -113,7 +113,7 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
         const reqBody = req.body;
 
         let courseTeacherGroupDocument = await CourseTeacherGroupModel.find(); // document searching of other collections
-
+//
         if (courseTeacherGroupDocument) {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
