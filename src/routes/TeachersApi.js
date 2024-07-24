@@ -3,8 +3,6 @@ const router = express.Router();
 const TeachersAuthController = require('../controllers/TeachersAuthController')
 const TeacherAuthVerifyMiddleware=require("../middleWare/TeacherAuthVerifyMiddleWare");
 const TeacherTasksController = require('../controllers/TeacherTaskController')
-const StudentAuthVerifyMiddleWare = require("../middleWare/StudentAuthVerifyMiddleWare");
-const StudentTasksController = require("../controllers/StudentTaskController");
 
 router.post('/Registration', TeachersAuthController.Registration)
 router.get('/Login/:email/:password', TeachersAuthController.Login)
@@ -19,7 +17,7 @@ router.post("/RecoverResetPassword",TeachersAuthController.RecoverResetPassword)
 //router.post("/createTask",TeacherAuthVerifyMiddleware,TeacherTasksController.createTask);
 router.post("/createSubjectGroupBatchSections",TeacherAuthVerifyMiddleware,TeacherTasksController.createSubjectGroupBatchSections);
 router.post("/joinSubjectGroupBatchSections/:id",TeacherTasksController.joinSubjectGroupBatchSections);
-router.post("/joinSubjectGroupBatchSections/:courseGroupId/:memberName",TeacherTasksController.chatSubjectGroupBatchSections);
+router.post("/joinSubjectGroupBatchSections/:courseGroupId/:memberId",TeacherTasksController.chatSubjectGroupBatchSections);
 router.get("/teacherAddTask/:batch/:section/:title/:taskType",TeacherAuthVerifyMiddleware,TeacherTasksController.teacherAddTask);
 router.post("/facultyMeeting",TeacherAuthVerifyMiddleware, TeacherTasksController.facultyMeeting);
 router.get("/showFacultyMeeting",TeacherAuthVerifyMiddleware, TeacherTasksController.showFacultyMeeting);

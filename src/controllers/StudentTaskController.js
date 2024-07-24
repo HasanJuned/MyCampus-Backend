@@ -2,7 +2,6 @@ const TasksModel = require("../models/StudentTaskModel")
 const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
 const StuAddMyTodoModel = require("../models/StuAddMyTodoModel");
-const Resource = require("../models/ResourceModel");
 const StudentResourceModel = require("../models/StudentResourceModel");
 
 exports.availableCourseBatch = async (req, res) => {

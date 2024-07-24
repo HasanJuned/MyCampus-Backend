@@ -109,30 +109,20 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
     try {
 
         let id = req.params.courseGroupId;
-        //let id9 = req.params.memberId;
-        let id9 = req.params.memberName;
-        let findId = {_id: id} // id found
+        let id9 = req.params.memberId;
         const reqBody = req.body;
-        const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
 
         let courseTeacherGroupDocument = await CourseTeacherGroupModel.find(); // document searching of other collections
-        let idFind = req.params.id
-        console.log('g', idFind)
 
         if (courseTeacherGroupDocument) {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
-                const id3 = courseTeacherGroupDocuments._id;
-                const membersObjectId = courseTeacherGroupDocuments.member.map(member => member.name);
-                console.log('j', membersObjectId)
 
                 for (let j = 0; j < courseTeacherGroupDocuments.member.length; j++) {
                     const member = courseTeacherGroupDocuments.member[j];
-                    const memberObjectId = member.name;
-                    console.log("Member's Object ID:", memberObjectId);
+                    const memberObjectId = member._id;
                     if (memberObjectId.toString() === id9) {
-                        console.log('Found');
-                        member.chat.push(reqBody) // ono aslam
+                        member.chat.push(reqBody)
                         await courseTeacherGroupDocuments.save();
                         return res.status(200).json({status: 'success', data: reqBody});
 
