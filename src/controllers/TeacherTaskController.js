@@ -113,7 +113,6 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
         const reqBody = req.body;
 
         let courseTeacherGroupDocument = await CourseTeacherGroupModel.find(); // document searching of other collections
-//
         if (courseTeacherGroupDocument) {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
@@ -225,34 +224,32 @@ exports.showAnnouncement = async (req, res) => {
     }
 };
 
-exports.facAddMyTodo=async(req,res)=>{
+exports.facAddMyTodo = async (req, res) => {
 
-    try{
+    try {
         let reqBody = req.body;
         reqBody.email = req.headers['email'];
 
         let result = await FacAddMyTodoModel.create(reqBody)
-        res.status(200).json({ status: 'success', data: result });
+        res.status(200).json({status: 'success', data: result});
 
-    }catch(e){
-        res.status(400).json({ status: 'fail', data: 'Try again' });
+    } catch (e) {
+        res.status(400).json({status: 'fail', data: 'Try again'});
     }
-
 
 
 }
 
-exports.showFacMyTodo=async(req,res)=>{
+exports.showFacMyTodo = async (req, res) => {
 
-    try{
+    try {
         let result = await FacAddMyTodoModel.find()
         let count = result.length
-        res.status(200).json({ status: 'success', count: count, data: result });
+        res.status(200).json({status: 'success', count: count, data: result});
 
-    }catch(e){
-        res.status(400).json({ status: 'fail', data: 'Try again' });
+    } catch (e) {
+        res.status(400).json({status: 'fail', data: 'Try again'});
     }
-
 
 
 }
@@ -412,13 +409,13 @@ exports.showChats = async (req, res) => {
     try {
         const email = req.headers['email'];
         const groupId = req.params.groupId;
-        let result = await CourseTeacherGroupModel.find({ email: email, _id: groupId});
+        let result = await CourseTeacherGroupModel.find({email: email, _id: groupId});
         let membersOnly = result.reduce((acc, course) => {
             return acc.concat(course.member);
         }, []);
-        res.status(200).json({ status: 'success', data: membersOnly });
+        res.status(200).json({status: 'success', data: membersOnly});
     } catch (e) {
-        res.status(400).json({ status: 'fail', data: 'Try again' });
+        res.status(400).json({status: 'fail', data: 'Try again'});
     }
 }
 
