@@ -25,6 +25,7 @@ router.post("/announcement",TeacherAuthVerifyMiddleware, TeacherTasksController.
 router.get("/showAnnouncement",TeacherAuthVerifyMiddleware, TeacherTasksController.showAnnouncement);
 router.post("/resource",TeacherAuthVerifyMiddleware, TeacherTasksController.resource);
 router.get("/showResources",TeacherAuthVerifyMiddleware, TeacherTasksController.showResources);
+router.get("/deleteTeacherResources/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTeacherResources);
 router.post("/facAddMyTodo",TeacherAuthVerifyMiddleware, TeacherTasksController.facAddMyTodo);
 router.get("/showFacMyTodo",TeacherAuthVerifyMiddleware,TeacherTasksController.showFacMyTodo);
 //router.post("/joinGroupBySubjId/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.createGroup2);

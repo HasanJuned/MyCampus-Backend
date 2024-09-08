@@ -290,6 +290,20 @@ exports.showResources = async (req, res) => {
     }
 };
 
+exports.deleteTeacherResources = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let deleteResource = {_id: id}
+
+        let result = await Resource.deleteOne(deleteResource)
+        res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: e.toString()});
+
+    }
+}
+
 exports.deleteTeacherTask = async (req, res) => {
     try {
         let id = req.params.id;
