@@ -141,6 +141,20 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
     }
 };
 
+exports.deleteGroupsByTeachers = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let deleteGroup = {_id: id}
+
+        let result = await CourseTeacherGroupModel.deleteOne(deleteGroup)
+        res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: e.toString()});
+
+    }
+}
+
 exports.teacherAddTask = async (req, res) => {
     try {
 
