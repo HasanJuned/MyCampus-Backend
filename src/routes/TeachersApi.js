@@ -19,6 +19,7 @@ router.post("/createSubjectGroupBatchSections",TeacherAuthVerifyMiddleware,Teach
 router.post("/joinSubjectGroupBatchSections/:id",TeacherTasksController.joinSubjectGroupBatchSections);
 router.post("/joinSubjectGroupBatchSections/:courseGroupId/:memberId",TeacherTasksController.chatSubjectGroupBatchSections);
 router.get("/deleteGroupsByTeachers/:id",TeacherAuthVerifyMiddleware, TeacherTasksController.deleteGroupsByTeachers);
+router.get('/delete-chat/:groupId/:memberId/:messageId', TeacherTasksController.deleteChatMessage);
 router.get("/teacherAddTask/:batch/:section/:title/:taskType",TeacherAuthVerifyMiddleware,TeacherTasksController.teacherAddTask);
 router.post("/facultyMeeting",TeacherAuthVerifyMiddleware, TeacherTasksController.facultyMeeting);
 router.get("/showFacultyMeeting",TeacherAuthVerifyMiddleware, TeacherTasksController.showFacultyMeeting);

@@ -141,6 +141,37 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
     }
 };
 
+exports.deleteChatMessage = async (req, res) => {
+    try {
+        const { memberId, messageId, groupId } = req.params;
+
+        const group = await CourseTeacherGroupModel.findById(groupId);
+        if (!group) {
+            return res.status(404).json({ status: 'fail', message: 'Group not found' });
+        }
+
+        const member = group.member.id(memberId);
+        if (!member) {
+            return res.status(404).json({ status: 'fail', message: 'Member not found' });
+        }
+
+        const messageIndex = member.chat.findIndex(chat => chat._id.toString() === messageId);
+        if (messageIndex === -1) {
+            return res.status(404).json({ status: 'fail', message: 'Message not found' });
+        }
+
+        member.chat.splice(messageIndex, 1);
+        await group.save();
+
+        res.status(200).json({ status: 'success', message: 'Deleted' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'fail', message: 'An error occurred, try again' });
+    }
+};
+
+
+
 exports.deleteGroupsByTeachers = async (req, res) => {
     try {
         let id = req.params.id;
