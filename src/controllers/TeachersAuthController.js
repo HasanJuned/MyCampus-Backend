@@ -54,6 +54,25 @@ exports.AvailableTeachers = async (req, res) => {
     }
 
 }
+exports.AvailityCheckTeachers = async (req, res) => {
+    try {
+        let email = req.params.email;
+        let teacher = await TeachersAuthModel.findOne({ email: email });
+
+        if (teacher) {
+            // Email found, return success
+            res.status(200).json({ status: "success", message: "User found", data: teacher });
+        } else {
+            // Email not found, return specific message
+            res.status(404).json({ status: "fail", message: "No user found with this email" });
+        }
+
+    } catch (e) {
+        // Error handling
+        res.status(500).json({ status: "error", message: "Server error, please try again" });
+    }
+};
+
 
 exports.ProfileDetails = async (req, res) => {
     try {

@@ -7,6 +7,7 @@ const TeacherTasksController = require('../controllers/TeacherTaskController')
 router.post('/Registration', TeachersAuthController.Registration)
 router.get('/Login/:email/:password', TeachersAuthController.Login)
 router.get('/AvailableTeachers', TeachersAuthController.AvailableTeachers)
+router.get('/AvailityCheckTeachers/:email', TeachersAuthController.AvailityCheckTeachers)
 router.get('/ProfileDetails', TeacherAuthVerifyMiddleware, TeachersAuthController.ProfileDetails)
 router.post('/ProfileUpdate', TeacherAuthVerifyMiddleware, TeachersAuthController.ProfileUpdate)
 router.get("/RecoverVerifyEmail/:email",TeachersAuthController.RecoverVerifyEmail);
@@ -35,6 +36,7 @@ router.get("/showFacMyTodo",TeacherAuthVerifyMiddleware,TeacherTasksController.s
 router.get("/deleteTeacherTask/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTeacherTask);
 router.get("/deleteFacultyMeeting/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteFacultyMeeting);
 router.get("/deleteTeacherAnnouncement/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTeacherAnnouncement);
+router.get("/deleteTeacherTodo/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.deleteTeacherTodo);
 router.post("/updateSubjectGroupDetails/:id",TeacherAuthVerifyMiddleware,TeacherTasksController.updateSubjectGroupDetails);
 
 router.get("/listTaskByStatus/:batch",TeacherAuthVerifyMiddleware,TeacherTasksController.listTaskByStatus);

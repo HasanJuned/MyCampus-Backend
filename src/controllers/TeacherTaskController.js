@@ -256,10 +256,8 @@ exports.showAnnouncement = async (req, res) => {
 
         let reqBody = req.params
         let email = req.headers['email']
-        //console.log(reqBody2)
-        //await TeacherAnnouncement.find({email:email})
+
         let result = await TeacherAnnouncement.find({email: email});
-        //console.log(result)
 
         return res.status(200).json({status: 'success', data: result});
 
@@ -288,7 +286,8 @@ exports.facAddMyTodo = async (req, res) => {
 exports.showFacMyTodo = async (req, res) => {
 
     try {
-        let result = await FacAddMyTodoModel.find()
+        let email = req.headers['email']
+        let result = await FacAddMyTodoModel.find({email: email})
         let count = result.length
         res.status(200).json({status: 'success', count: count, data: result});
 
@@ -298,6 +297,20 @@ exports.showFacMyTodo = async (req, res) => {
 
 
 }
+
+exports.deleteTeacherTodo = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let deleteTodo = {_id: id}
+
+        let result = await FacAddMyTodoModel.deleteOne(deleteTodo)
+        res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: e.toString()});
+
+    }
+}//
 
 exports.resource = async (req, res) => {
     try {

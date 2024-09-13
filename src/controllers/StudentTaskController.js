@@ -1,4 +1,4 @@
-const TasksModel = require("../models/StudentTaskModel")
+const StudentTasksModel = require("../models/StudentTaskModel")
 const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
 const StuAddMyTodoModel = require("../models/StuAddMyTodoModel");
@@ -156,7 +156,7 @@ exports.deleteTask=async(req,res)=>{
         let id = req.params.id;
         let deleteTask = {_id:id}
 
-        let result = await TasksModel.deleteOne(deleteTask)
+        let result = await StudentTasksModel.deleteOne(deleteTask)
         res.status(200).json({ status: 'success', data: result });
 
     }catch(e){
@@ -174,7 +174,7 @@ exports.updateTaskStatus=async(req,res)=>{
         let updateTask = {_id:id};
         let reqBody = {status:status};
 
-        let result = await TasksModel.updateOne(updateTask,reqBody)
+        let result = await StudentTasksModel.updateOne(updateTask,reqBody)
         res.status(200).json({ status: 'success', data: result });
 
 
@@ -192,7 +192,7 @@ exports.listTaskByStatus=async(req,res)=>{
         let status = req.params.status;
         let email = req.headers['email']
 
-        let result = await TasksModel.find({email:email, status:status})
+        let result = await StudentTasksModel.find({email:email, status:status})
         res.status(200).json({ status: 'success', data: result });
 
 
@@ -208,7 +208,7 @@ exports.taskStatusCount=async(req,res)=>{
     try{
 
         let email = req.headers['email'];
-        let result = await TasksModel.aggregate([
+        let result = await StudentTasksModel.aggregate([
             {$match:{email:email}},
             {$group: {_id:"$status", sum:{$count:{}}}}
         ]);
