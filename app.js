@@ -37,7 +37,7 @@ app.use('/api/teacher', teachersRouter);
 //     console.log(error);
 //     process.exit(1);
 // })
-//
+
 mongoose.connect("mongodb+srv://softenghasan25:aEaV06X6h7vb5arU@mycampus.jnbwms4.mongodb.net/?retryWrites=true&w=majority&appName=mycampus")
 .then(()=>console.log('Database connected'))
 .catch((error)=>{

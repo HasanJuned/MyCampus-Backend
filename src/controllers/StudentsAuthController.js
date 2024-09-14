@@ -13,7 +13,7 @@ exports.Registration=async (req,res)=>{
         res.status(200).json({status: "success", data: result})
 
     }catch(e){
-        res.status(200).json({status: "fail", data: "Something went wrong"})
+        res.status(200).json({status: "fail", data: e.toString()})
     }
 
 }
@@ -40,24 +40,32 @@ exports.Login=async (req,res)=>{
         }else{
             res.status(200).json({status: "fail", data: "No user found. Try again!"})
         }
-        
+
     }catch(e){
         res.status(200).json({status: "fail", data: "Something went wrong"})
     }
 
 }
 
-
-exports.ProfileDetails = async (req, res) => {
+exports.AvailityCheckStudents = async (req, res) => {
     try {
-      let email = req.headers['studentId'];
-      let result = await StudentsAuthModel.find({ studentId: email });
-      res.status(200).json({ status: 'success', data: result });
+        let studentId = req.params.studentId;
+        let student = await StudentsAuthModel.findOne({ studentId: studentId });
+
+        if (student) {
+            // Email found, return success
+            res.status(200).json({ status: "success", message: "Student found", data: student });
+        } else {
+            // Email not found, return specific message
+            res.status(404).json({ status: "fail", message: "No student found with this id" });
+        }
+
     } catch (e) {
-      console.error(e);
-      return res.status(200).json({ status: 'fail', data: 'Internal Server Error' });
+        // Error handling
+        res.status(500).json({ status: "error", message: "Server error, please try again" });
     }
-  };
+};
+
 
   exports.ProfileUpdate = async (req, res) => {
     try {

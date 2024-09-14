@@ -5,10 +5,11 @@ const StudentAuthVerifyMiddleWare=require("../middleWare/StudentAuthVerifyMiddle
 const StudentTasksController = require('../controllers/StudentTaskController')
 const TeacherTasksController = require("../controllers/TeacherTaskController");
 const TeacherAuthVerifyMiddleware = require("../middleWare/TeacherAuthVerifyMiddleWare");
+const TeachersAuthController = require("../controllers/TeachersAuthController");
 
 router.post('/Registration', StudentsAuthController.Registration)
 router.get('/Login/:studentId/:password', StudentsAuthController.Login)
-router.get('/ProfileDetails', StudentAuthVerifyMiddleWare, StudentsAuthController.ProfileDetails)
+router.get('/AvailityCheckStudents/:studentId', StudentsAuthController.AvailityCheckStudents)
 router.post('/ProfileUpdate', StudentAuthVerifyMiddleWare, StudentsAuthController.ProfileUpdate)
 router.get("/RecoverVerifyEmail/:email",StudentsAuthController.RecoverVerifyEmail);
 router.get("/RecoverVerifyOTP/:email/:otp",StudentsAuthController.RecoverVerifyOtp);
