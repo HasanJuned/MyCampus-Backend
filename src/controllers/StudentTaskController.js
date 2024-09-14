@@ -3,6 +3,7 @@ const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
 const StuAddMyTodoModel = require("../models/StuAddMyTodoModel");
 const StudentResourceModel = require("../models/StudentResourceModel");
+const FacAddMyTodoModel = require("../models/FacAddMyTodoModel");
 
 exports.availableCourseBatch = async (req, res) => {
 
@@ -121,7 +122,19 @@ exports.showStuAddMyTodo=async(req,res)=>{
 
 
 }
+exports.deleteStudentTodo = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let deleteTodo = {_id: id}
 
+        let result = await StuAddMyTodoModel.deleteOne(deleteTodo)
+        res.status(200).json({status: 'success', data: result});
+
+    } catch (e) {
+        res.status(200).json({status: 'fail', data: e.toString()});
+
+    }
+}//
 exports.resource = async (req, res) => {
     try {
 

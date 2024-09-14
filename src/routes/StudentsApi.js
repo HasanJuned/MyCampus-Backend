@@ -22,6 +22,7 @@ router.get("/allAnnouncement2/:batch", StudentTasksController.allAnnouncement2);
 router.get("/enrolledCourse/:memberName", StudentTasksController.enrolledCourse);
 router.post("/stuAddMyTodo",StudentAuthVerifyMiddleWare,StudentTasksController.stuAddMyTodo);
 router.get("/showStudentTodo",StudentAuthVerifyMiddleWare,StudentTasksController.showStuAddMyTodo);
+router.get("/deleteStudentTodo/:id",StudentAuthVerifyMiddleWare,StudentTasksController.deleteStudentTodo);
 router.post("/studentAddResources", StudentTasksController.resource);
 router.get("/showStudentResources/:batch", StudentTasksController.showResources);
 
