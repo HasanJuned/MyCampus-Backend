@@ -3,9 +3,6 @@ const router = express.Router();
 const StudentsAuthController = require('../controllers/StudentsAuthController')
 const StudentAuthVerifyMiddleWare=require("../middleWare/StudentAuthVerifyMiddleWare");
 const StudentTasksController = require('../controllers/StudentTaskController')
-const TeacherTasksController = require("../controllers/TeacherTaskController");
-const TeacherAuthVerifyMiddleware = require("../middleWare/TeacherAuthVerifyMiddleWare");
-const TeachersAuthController = require("../controllers/TeachersAuthController");
 
 router.post('/Registration', StudentsAuthController.Registration)
 router.get('/Login/:studentId/:password', StudentsAuthController.Login)
@@ -21,7 +18,7 @@ router.get("/allAnnouncement/:batch/:type", StudentTasksController.allAnnounceme
 router.get("/allAnnouncement2/:batch", StudentTasksController.allAnnouncement2);
 router.get("/enrolledCourse/:memberName", StudentTasksController.enrolledCourse);
 router.post("/stuAddMyTodo",StudentAuthVerifyMiddleWare,StudentTasksController.stuAddMyTodo);
-router.get("/showStudentTodo",StudentAuthVerifyMiddleWare,StudentTasksController.showStuAddMyTodo);
+router.get("/showStudentTodo/:studentId",StudentAuthVerifyMiddleWare,StudentTasksController.showStuAddMyTodo);
 router.get("/deleteStudentTodo/:id",StudentAuthVerifyMiddleWare,StudentTasksController.deleteStudentTodo);
 router.post("/studentAddResources", StudentTasksController.resource);
 router.get("/showStudentResources/:batch", StudentTasksController.showResources);

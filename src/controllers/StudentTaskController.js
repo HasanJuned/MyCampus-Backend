@@ -3,7 +3,6 @@ const CourseTeacherGroupModel = require("../models/CourseTeacherGroupModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
 const StuAddMyTodoModel = require("../models/StuAddMyTodoModel");
 const StudentResourceModel = require("../models/StudentResourceModel");
-const FacAddMyTodoModel = require("../models/FacAddMyTodoModel");
 
 exports.availableCourseBatch = async (req, res) => {
 
@@ -110,8 +109,9 @@ exports.showStuAddMyTodo=async(req,res)=>{
 
     try{
         let email = req.headers['email']
+        let studentId = req.params.studentId;
 
-        let result = await StuAddMyTodoModel.find({email: email})
+        let result = await StuAddMyTodoModel.find({email: email, studentId: studentId})
         let count = result.length
         res.status(200).json({ status: 'success', count: count, data: result });
 
