@@ -4,8 +4,6 @@ const TeacherAddTask = require("../models/TeacherAddTaskModel");
 const FacultyMeeting = require("../models/FacultyMeetingModel");
 const TeacherAnnouncement = require("../models/TeacherAnnouncementModel");
 const Resource = require("../models/ResourceModel");
-const path = require("path");
-const StuAddMyTodoModel = require("../models/StuAddMyTodoModel");
 const FacAddMyTodoModel = require("../models/FacAddMyTodoModel");
 
 
@@ -13,15 +11,11 @@ const FacAddMyTodoModel = require("../models/FacAddMyTodoModel");
 exports.createSubjectGroupBatchSections = async (req, res) => {
     try {
 
-        let id = req.params.id;
-        let findId = {_id: id} // id found
         const reqBody = req.body;
-        const members = Array.isArray(reqBody.member) ? reqBody.member : [reqBody.member];
 
         const mainDocument = await CourseTeacherGroupModel.find(
             {batch: reqBody.batch, courseCode: reqBody.courseCode, courseTitle: reqBody.courseTitle}
         ).count();
-        console.log(mainDocument)
 
         if (!mainDocument) {
             try {
@@ -37,22 +31,6 @@ exports.createSubjectGroupBatchSections = async (req, res) => {
             return res.status(400).json({status: 'fail', data: 'Group is already added!'});
 
         }
-
-        // const existingMembers = mainDocument.member.filter(existingMember =>
-        //     members.some(newMember => existingMember.name === newMember.name)
-        // );
-        //
-        // if (existingMembers.length === 0) {
-        //     // Add new members to the array using $push
-        //     mainDocument.member.push(...members);
-        //
-        //     // Save the updated document
-        //     const updatedDocument = await mainDocument.save();
-        //     return res.status(200).json({status: 'success', data: updatedDocument});
-        // } else {
-        //     console.log("Group is already added");
-        //     return res.status(200).json({status: 'fail', data: 'One or more group already added'});
-        // }
     } catch (e) {
         console.error(e.toString());
         return res.status(200).json({status: 'fail', data: e.toString()});
@@ -72,7 +50,6 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
                 const id3 = courseTeacherGroupDocuments._id;
-                //const membersObjectId = courseTeacherGroupDocuments.member.map(member => member._id);
 
                 if (id3.toString() === idFind) {
                     console.log("Found document ID:", id3);
@@ -81,11 +58,9 @@ exports.joinSubjectGroupBatchSections = async (req, res) => {
                         members.some(newMember => existingMember.name === newMember.name)
                     );
 
-                    if (existingMembers.length === 0) { /// existingMembers.length === 1 && count = 0
+                    if (existingMembers.length === 0) {
                         // Add new members to the array using $push
                         courseTeacherGroupDocuments.member.push(...members);
-
-                        // Save the updated document
                         const updatedDocument = await courseTeacherGroupDocuments.save();
                         return res.status(200).json({status: 'success', data: updatedDocument});
                     } else {
@@ -112,7 +87,7 @@ exports.chatSubjectGroupBatchSections = async (req, res) => {
         let id9 = req.params.memberId;
         const reqBody = req.body;
 
-        let courseTeacherGroupDocument = await CourseTeacherGroupModel.find(); // document searching of other collections
+        let courseTeacherGroupDocument = await CourseTeacherGroupModel.find();
         if (courseTeacherGroupDocument) {
             for (let i = 0; i < courseTeacherGroupDocument.length; i++) {
                 const courseTeacherGroupDocuments = courseTeacherGroupDocument[i];
